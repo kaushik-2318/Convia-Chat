@@ -1,7 +1,10 @@
-import React from 'react'
+import React from 'react';
+import { Navigate, Outlet, Link } from 'react-router-dom';
 
 export default function AuthLayout() {
-  return (
-    <div>AuthLayout</div>
-  )
+    return (
+        <div className="h-full">
+            <Outlet />
+        </div>
+    );
 }

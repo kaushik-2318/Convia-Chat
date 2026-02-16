@@ -1,13 +1,12 @@
-import React, { Suspense } from 'react'
+import React, { Suspense } from 'react';
+import Loader from './common/Loader';
 
-const LoadingScreen = () => {
-  return <div>Loading...</div>
-}
+const Loadable = (Component) => (props) => {
+    return (
+        <Suspense fallback={<Loader />}>
+            <Component {...props} />
+        </Suspense>
+    );
+};
 
-export default function Loadable({ Component, ...props }) {
-  return (
-    <Suspense fallback={<LoadingScreen />}>
-      <Component {...props} />
-    </Suspense>
-  );
-}
+export default Loadable;

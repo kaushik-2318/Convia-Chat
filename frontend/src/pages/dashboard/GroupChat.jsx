@@ -1,7 +1,5 @@
-import React from 'react'
+import React from 'react';
 
 export default function GroupChat() {
-  return (
-    <div>GroupChat</div>
-  )
+    return <div>GroupChat</div>;
 }

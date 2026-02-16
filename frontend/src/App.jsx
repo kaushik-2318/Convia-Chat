@@ -1,8 +1,13 @@
-import Router from "./routes";
-
+import ParticleBackground from './components/common/ParticleBackground';
+import Router from './routes';
 
 export default function App() {
-  return (<div>
-    <Router />
-  </div>);
+    return (
+        <div className="">
+            <ParticleBackground />
+            <div className="relative z-10 h-screen text-white">
+                <Router />
+            </div>
+        </div>
+    );
 }

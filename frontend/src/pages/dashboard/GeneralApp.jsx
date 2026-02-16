@@ -1,7 +1,5 @@
-import React from 'react'
+import React from 'react';
 
 export default function GeneralApp() {
-  return (
-    <div>GeneralApp</div>
-  )
+    return <div>GeneralApp</div>;
 }
