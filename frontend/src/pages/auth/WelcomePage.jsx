@@ -65,7 +65,7 @@ export default function WelcomePage() {
                         },
                     },
                 }}
-                className="z-2 grid max-w-lg grid-cols-1 gap-10 rounded-2xl border border-slate-800 bg-slate-950 p-5 md:max-w-2xl md:grid-cols-2 md:gap-0 lg:max-w-5xl lg:p-15 lg:py-10"
+                className="z-2 grid max-w-lg grid-cols-1 gap-10 rounded-2xl border border-slate-800 bg-slate-950 p-5 md:max-w-2xl md:grid-cols-2 md:gap-0 lg:max-w-5xl lg:p-15 lg:py-14"
             >
                 <div className="order-2 w-full space-y-4 text-center">
                     <MotionDiv
@@ -135,7 +135,7 @@ export default function WelcomePage() {
                                 >
                                     <Link to={social.link} target="_blank">
                                         <Button
-                                            className="h-10 w-10 rounded-full p-0"
+                                            className="h-10 w-10 rounded-full p-0 hover:scale-110 duration-200"
                                             style={{ background: social.bg }}
                                         >
                                             {social.icon}
@@ -215,7 +215,7 @@ export default function WelcomePage() {
                     </MotionDiv>
                 </div>
 
-                <div className="relative z-0 h-9 w-full max-w-100 md:w-1/2">
+                <div className="relative z-0 md:z-1 h-9 w-full max-w-100 md:w-1/2">
                     <MotionDiv
                         variants={{
                             hidden: { opacity: 0, y: -20 },
