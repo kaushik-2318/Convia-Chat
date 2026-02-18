@@ -10,3 +10,7 @@
 ::-webkit-scrollbar {
     display: none;
 }
+
+.logo-shadow {
+    filter: drop-shadow(0 0 15px rgba(99, 102, 241, 0.5));
+}

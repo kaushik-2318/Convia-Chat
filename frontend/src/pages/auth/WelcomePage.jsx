@@ -65,7 +65,7 @@ export default function WelcomePage() {
                         },
                     },
                 }}
-                className="z-2 grid max-w-lg grid-cols-1 gap-10 rounded-2xl border border-slate-800 bg-slate-950 p-5 md:max-w-2xl md:grid-cols-2 md:gap-0 lg:max-w-5xl lg:p-15 lg:py-14"
+                className="z-2 grid max-w-lg grid-cols-1 gap-10 rounded-2xl border border-slate-800 bg-slate-950 p-5 md:max-w-2xl md:grid-cols-2 md:gap-0 lg:max-w-5xl lg:p-15 lg:py-14 hover:[box-shadow:0_0_12px_#6366f1,0_0_28px_#6366f1] duration-300"
             >
                 <div className="order-2 w-full space-y-4 text-center">
                     <MotionDiv
@@ -135,7 +135,7 @@ export default function WelcomePage() {
                                 >
                                     <Link to={social.link} target="_blank">
                                         <Button
-                                            className="h-10 w-10 rounded-full p-0 hover:scale-110 duration-200"
+                                            className="h-10 w-10 rounded-full p-0 duration-200 hover:scale-110"
                                             style={{ background: social.bg }}
                                         >
                                             {social.icon}
@@ -165,7 +165,7 @@ export default function WelcomePage() {
 
                         <GlassCard
                             variant="neo"
-                            className="h-full w-full border-white/20"
+                            className="h-full w-full border-white/20 rounded-2xl"
                         >
                             <div className="absolute top-1/2 left-1/2 h-[70%] w-[70%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/10" />
                             <div className="absolute top-1/2 left-1/2 h-[85%] w-[85%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/10" />
@@ -196,7 +196,10 @@ export default function WelcomePage() {
                 }}
                 className="flex w-full flex-col items-center justify-center md:w-2xl md:flex-row"
             >
-                <div className="relative z-1 h-9 w-full max-w-100 md:w-1/2">
+                <Link
+                    to="/auth/register"
+                    className="relative z-1 h-9 w-full max-w-100 md:w-1/2"
+                >
                     <MotionDiv
                         variants={{
                             hidden: { opacity: 0, y: -20 },
@@ -213,9 +216,12 @@ export default function WelcomePage() {
                             <ArrowRight className="h-5 w-5" />
                         </Button>
                     </MotionDiv>
-                </div>
+                </Link>
 
-                <div className="relative z-0 md:z-1 h-9 w-full max-w-100 md:w-1/2">
+                <Link
+                    to="/auth/login"
+                    className="relative z-0 h-9 w-full max-w-100 md:z-1 md:w-1/2"
+                >
                     <MotionDiv
                         variants={{
                             hidden: { opacity: 0, y: -20 },
@@ -231,7 +237,7 @@ export default function WelcomePage() {
                             Login
                         </Button>
                     </MotionDiv>
-                </div>
+                </Link>
             </MotionDiv>
 
             <Dialog>
@@ -260,7 +266,7 @@ export default function WelcomePage() {
                     >
                         <GlassCard
                             variant="dark"
-                            className="w-full border-white/20 p-5 text-white"
+                            className="w-full border-white/20 p-5 text-white rounded-2xl"
                         >
                             <div className="flex items-center gap-3 text-center">
                                 <span className="h-px flex-1 bg-gray-400"></span>

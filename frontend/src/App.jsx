@@ -3,7 +3,7 @@ import Router from './routes';
 
 export default function App() {
     return (
-        <div className="">
+        <div className="select-none">
             <ParticleBackground />
             <div className="relative z-10 h-screen text-white">
                 <Router />
