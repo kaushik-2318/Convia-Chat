@@ -14,7 +14,6 @@ import {
     DialogTrigger,
 } from '@/components/ui/dialog';
 import { Button } from '@heroui/button';
-import { Separator } from '@/components/ui/separator';
 import { GithubLogoIcon, InstagramLogoIcon } from '@phosphor-icons/react';
 
 export default function WelcomePage() {
@@ -65,7 +64,8 @@ export default function WelcomePage() {
                         },
                     },
                 }}
-                className="z-2 grid max-w-lg grid-cols-1 gap-10 rounded-2xl border border-slate-800 bg-slate-950 p-5 md:max-w-2xl md:grid-cols-2 md:gap-0 lg:max-w-5xl lg:p-15 lg:py-14 hover:[box-shadow:0_0_12px_#6366f1,0_0_28px_#6366f1] duration-300"
+                style={{ '--glow-color': '#6366f1' }}
+                className="border-border bg-solid z-2 grid max-w-lg grid-cols-1 gap-10 rounded-2xl border p-5 md:max-w-2xl md:grid-cols-2 md:gap-0 lg:max-w-5xl lg:p-15 lg:py-14"
             >
                 <div className="order-2 w-full space-y-4 text-center">
                     <MotionDiv
@@ -82,15 +82,13 @@ export default function WelcomePage() {
                     >
                         <div className="mb-4 text-4xl font-bold tracking-tight md:text-5xl">
                             Welcome to <br />
-                            <span className="bg-linear-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent md:text-6xl">
+                            <span className="gradient-text md:text-6xl">
                                 Convia Chat
                             </span>
                         </div>
                         <p className="mb-4 text-xl font-bold tracking-tight">
                             Connect beyond{' '}
-                            <span className="bg-linear-to-r from-pink-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent">
-                                boundaries.
-                            </span>
+                            <span className="gradient-text">boundaries.</span>
                         </p>
 
                         <p className="text-gray-400">
@@ -98,14 +96,13 @@ export default function WelcomePage() {
                             <Link
                                 to={url}
                                 target="_blank"
-                                className="text-indigo-500"
+                                className="text-indigo"
                             >
                                 Kaushik Verma
                             </Link>
                             .
                         </p>
-
-                        <Separator className="my-5 hidden bg-slate-700 lg:block" />
+                        <div className="bg-separator my-5 hidden h-px w-full lg:block" />
                         <MotionDiv
                             initial="hidden"
                             animate="visible"
@@ -161,17 +158,16 @@ export default function WelcomePage() {
                     className="order-1 flex items-center justify-center md:order-2"
                 >
                     <div className="relative flex h-40 w-40 items-center justify-center md:h-60 md:w-60">
-                        <div className="absolute inset-0 animate-pulse rounded-full bg-linear-to-tr from-indigo-500 to-purple-500 opacity-10 blur-3xl"></div>
+                        <div className="from-indigo to-purple absolute inset-0 animate-pulse rounded-full bg-linear-to-tr opacity-10 blur-3xl" />
 
                         <GlassCard
                             variant="neo"
-                            className="h-full w-full border-white/20 rounded-2xl"
+                            className="h-full w-full rounded-2xl"
                         >
-                            <div className="absolute top-1/2 left-1/2 h-[70%] w-[70%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/10" />
-                            <div className="absolute top-1/2 left-1/2 h-[85%] w-[85%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/10" />
-
+                            <div className="border-border absolute top-1/2 left-1/2 h-[70%] w-[70%] -translate-x-1/2 -translate-y-1/2 rounded-full border" />
+                            <div className="border-border absolute top-1/2 left-1/2 h-[85%] w-[85%] -translate-x-1/2 -translate-y-1/2 rounded-full border" />
                             <div className="flex h-full w-full items-center justify-center">
-                                <Logo className="h-20 w-20 md:h-40 md:w-40" />
+                                <Logo className="logo-box-shadow h-20 w-20 md:h-40 md:w-40" />
                             </div>
                         </GlassCard>
                     </div>
@@ -233,7 +229,7 @@ export default function WelcomePage() {
                         }}
                         className="absolute -top-2 flex h-full w-full flex-col justify-center gap-4 md:w-full"
                     >
-                        <Button className="flex transform items-center justify-center rounded-b-xl border border-white/10 bg-slate-800/50 px-4 py-5 pt-7.5 font-semibold text-white transition-all hover:scale-105 hover:bg-slate-800 active:scale-95">
+                        <Button className="border-border bg-dark flex transform items-center justify-center rounded-b-xl border px-4 py-5 pt-7.5 font-semibold text-white transition-all hover:scale-105 active:scale-95">
                             Login
                         </Button>
                     </MotionDiv>
@@ -265,13 +261,13 @@ export default function WelcomePage() {
                         }}
                     >
                         <GlassCard
-                            variant="dark"
-                            className="w-full border-white/20 p-5 text-white rounded-2xl"
+                            variant="neo"
+                            className="border-border w-full rounded-2xl p-5 text-white"
                         >
                             <div className="flex items-center gap-3 text-center">
-                                <span className="h-px flex-1 bg-gray-400"></span>
+                                <span className="bg-separator h-px flex-1"></span>
                                 What is Convia Chat?
-                                <span className="h-px flex-1 bg-gray-400"></span>
+                                <span className="bg-separator h-px flex-1"></span>
                             </div>
                         </GlassCard>
                     </MotionDiv>
@@ -291,7 +287,7 @@ export default function WelcomePage() {
                             <Link
                                 to={url}
                                 target="_blank"
-                                className="text-indigo-500"
+                                className="text-indigo"
                             >
                                 Kaushik Verma
                             </Link>

@@ -26,7 +26,8 @@ export default function LoginPage() {
         <MotionDiv className="flex h-full w-full flex-col items-center justify-center p-5">
             <GlassCard
                 color={'#6366f1'}
-                className="w-full max-w-md space-y-5 rounded-xl border border-white/10 py-6 hover:backdrop-blur-xs"
+                variant={'transparent'}
+                className="w-full max-w-md space-y-5 py-6"
             >
                 <MotionDiv
                     initial={{ opacity: 0, y: 30 }}
@@ -38,45 +39,41 @@ export default function LoginPage() {
                 >
                     <div className="flex flex-col items-center">
                         <div className="mb-2 h-24 w-24">
-                            <Logo className="logo-shadow h-full w-full" />
+                            <Logo className="logo-box-shadow h-full w-full" />
                         </div>
                         <h1 className="text-5xl font-bold tracking-tight sm:text-7xl">
                             Convia
                         </h1>
                         <p className="text-center text-xl font-bold tracking-tight sm:text-2xl">
                             Connect beyond{' '}
-                            <span className="bg-linear-to-r from-pink-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent">
-                                boundaries.
-                            </span>
+                            <span className="gradient-text">boundaries.</span>
                         </p>
                     </div>
 
                     <div className="my-4">
                         <h2 className="text-center text-xl font-bold text-white">
                             Welcome Back{' '}
-                            <span className="bg-linear-to-r from-pink-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent">
-                                Cheif!
-                            </span>
+                            <span className="gradient-text">Cheif!</span>
                         </h2>
                     </div>
 
                     <div className="w-full max-w-md px-5 sm:px-10">
                         <form onSubmit={handleSubmit}>
-                            <div className="flex flex-col gap-5 sm:gap-7">
+                            <div className="flex flex-col gap-5 border-slate-300 text-slate-300 sm:gap-7">
                                 <div className="relative w-full">
                                     <input
                                         type="email"
                                         id="email"
-                                        className="peer w-full border-b border-slate-300 bg-transparent py-2 pl-10 placeholder-transparent transition-all duration-300 outline-none focus:pr-10 focus:pl-2 [:not(:placeholder-shown)]:pr-10 [:not(:placeholder-shown)]:pl-2"
+                                        className="peer w-full border-b bg-transparent py-2 pl-10 placeholder-transparent transition-all duration-300 outline-none focus:pr-10 focus:pl-2 [:not(:placeholder-shown)]:pr-10 [:not(:placeholder-shown)]:pl-2"
                                         placeholder=" "
                                     />
                                     <label
                                         htmlFor="email"
-                                        className="pointer-events-none absolute top-1/2 left-10 -translate-y-1/2 cursor-text text-sm text-slate-400 transition-all duration-300 peer-focus:-top-1 peer-focus:left-0 peer-focus:text-xs peer-[:not(:placeholder-shown)]:-top-1 peer-[:not(:placeholder-shown)]:left-0 peer-[:not(:placeholder-shown)]:text-xs sm:text-lg"
+                                        className="pointer-events-none absolute top-1/2 left-10 -translate-y-1/2 cursor-text text-sm transition-all duration-300 peer-focus:-top-1 peer-focus:left-0 peer-focus:text-xs peer-[:not(:placeholder-shown)]:-top-1 peer-[:not(:placeholder-shown)]:left-0 peer-[:not(:placeholder-shown)]:text-xs sm:text-lg"
                                     >
                                         Email
                                     </label>
-                                    <Mail className="pointer-events-none absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 text-slate-400 transition-all duration-500 peer-focus:left-[calc(100%-28px)] peer-[:not(:placeholder-shown)]:left-[calc(100%-28px)]" />
+                                    <Mail className="pointer-events-none absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 transition-all duration-500 peer-focus:left-[calc(100%-28px)] peer-[:not(:placeholder-shown)]:left-[calc(100%-28px)]" />
                                 </div>
 
                                 <div className="relative w-full">
@@ -87,23 +84,23 @@ export default function LoginPage() {
                                         }
                                         id="password"
                                         placeholder=" "
-                                        className="peer w-full border-b border-slate-300 bg-transparent py-2 pl-10 placeholder-transparent transition-all duration-300 outline-none focus:pr-10 focus:pl-2 [:not(:placeholder-shown)]:pr-10 [:not(:placeholder-shown)]:pl-2"
+                                        className="peer w-full border-b bg-transparent py-2 pl-10 placeholder-transparent transition-all duration-300 outline-none focus:pr-10 focus:pl-2 [:not(:placeholder-shown)]:pr-10 [:not(:placeholder-shown)]:pl-2"
                                     />
 
                                     <label
                                         htmlFor="password"
-                                        className="pointer-events-none absolute top-1/2 left-10 -translate-y-1/2 cursor-text text-sm text-slate-400 transition-all duration-300 peer-focus:-top-1 peer-focus:left-0 peer-focus:text-xs peer-[:not(:placeholder-shown)]:-top-1 peer-[:not(:placeholder-shown)]:left-0 peer-[:not(:placeholder-shown)]:text-xs sm:text-lg"
+                                        className="pointer-events-none absolute top-1/2 left-10 -translate-y-1/2 cursor-text text-sm transition-all duration-300 peer-focus:-top-1 peer-focus:left-0 peer-focus:text-xs peer-[:not(:placeholder-shown)]:-top-1 peer-[:not(:placeholder-shown)]:left-0 peer-[:not(:placeholder-shown)]:text-xs sm:text-lg"
                                     >
                                         Password
                                     </label>
 
-                                    <Lock className="pointer-events-none absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 text-slate-400 opacity-100 transition-all duration-500 peer-focus:left-[calc(100%-28px)] peer-focus:opacity-0 peer-[:not(:placeholder-shown)]:left-[calc(100%-28px)] peer-[:not(:placeholder-shown)]:opacity-0" />
+                                    <Lock className="pointer-events-none absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 opacity-100 transition-all duration-500 peer-focus:left-[calc(100%-28px)] peer-focus:opacity-0 peer-[:not(:placeholder-shown)]:left-[calc(100%-28px)] peer-[:not(:placeholder-shown)]:opacity-0" />
 
                                     <Button
                                         onMouseDown={(e) => e.preventDefault()}
                                         type="button"
                                         onPress={handleToggle}
-                                        className="pointer-events-none absolute top-1/2 left-0 -translate-y-1/2 rounded-full p-0 text-slate-400 opacity-0 transition-all duration-500 peer-focus:pointer-events-auto peer-focus:left-[calc(100%-28px)] peer-focus:opacity-100 peer-[:not(:placeholder-shown)]:pointer-events-auto peer-[:not(:placeholder-shown)]:left-[calc(100%-28px)] peer-[:not(:placeholder-shown)]:opacity-100"
+                                        className="pointer-events-none absolute top-1/2 left-0 -translate-y-1/2 rounded-full p-0 opacity-0 transition-all duration-500 peer-focus:pointer-events-auto peer-focus:left-[calc(100%-28px)] peer-focus:opacity-100 peer-[:not(:placeholder-shown)]:pointer-events-auto peer-[:not(:placeholder-shown)]:left-[calc(100%-28px)] peer-[:not(:placeholder-shown)]:opacity-100"
                                     >
                                         {showPassword ? (
                                             <EyeOff className="h-5 w-5" />
@@ -116,7 +113,7 @@ export default function LoginPage() {
 
                             <Button
                                 type="submit"
-                                className="my-5 flex h-14 w-full items-center justify-center gap-2 rounded-xl border border-white/10 bg-linear-to-r from-indigo-600 via-purple-600 to-purple-700 text-lg font-bold text-white shadow-lg shadow-indigo-500/30 transition-all hover:scale-[1.02] hover:shadow-indigo-500/50 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-70 sm:my-7"
+                                className="from-indigo via-pink to-purple my-5 flex h-14 w-full items-center justify-center gap-2 rounded-xl bg-linear-to-r text-lg font-bold text-white shadow-lg transition-all hover:scale-[1.02] hover:shadow-indigo-500/50 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-70 sm:my-7"
                             >
                                 {false ? (
                                     <Loader2 className="animate-spin" />
@@ -129,9 +126,9 @@ export default function LoginPage() {
                             </Button>
 
                             <div className="mb-3 flex w-full items-center justify-between gap-3 text-sm text-slate-300">
-                                <span className="w-full border border-slate-700"></span>
+                                <span className="border-border w-full border"></span>
                                 <span>OR</span>
-                                <span className="w-full border border-slate-700"></span>
+                                <span className="border-border w-full border"></span>
                             </div>
 
                             <MotionDiv
@@ -212,7 +209,7 @@ export default function LoginPage() {
                                 New to Convia?{' '}
                                 <Link
                                     to={'/auth/register'}
-                                    className="font-bold text-indigo-400 transition-colors hover:text-indigo-300 hover:underline"
+                                    className="text-indigo font-bold hover:underline"
                                 >
                                     Sign Up
                                 </Link>

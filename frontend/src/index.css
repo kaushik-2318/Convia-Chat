@@ -11,6 +11,38 @@
     display: none;
 }
 
-.logo-shadow {
+@theme {
+    --color-border: #1e293b;
+    --color-solid: #020617;
+    --color-dark: #02061780;
+    --color-indigo: #6366f1;
+    --color-purple: #a855f7;
+    --color-pink: #ec4899;
+    --color-separator: #475569;
+}
+
+.glow-hover {
+    transition: box-shadow 0.3s ease;
+}
+
+.glow-hover:hover {
+    box-shadow:
+        0 0 12px var(--glow-color),
+        0 0 28px var(--glow-color);
+}
+
+.logo-box-shadow {
     filter: drop-shadow(0 0 15px rgba(99, 102, 241, 0.5));
+}
+
+.gradient-text {
+    background: linear-gradient(
+        to right,
+        var(--color-indigo),
+        var(--color-purple),
+        var(--color-pink)
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
 }

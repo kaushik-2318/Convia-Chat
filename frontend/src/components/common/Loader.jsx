@@ -18,7 +18,7 @@ export default function Loader({ size = 'md', className = '' }) {
         >
             <div
                 className={cn(
-                    'animate-spin rounded-full border-white/10 border-t-indigo-500',
+                    'border-border border-t-indigo animate-spin rounded-full',
                     sizeClasses[size]
                 )}
             />
