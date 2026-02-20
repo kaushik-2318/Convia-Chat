@@ -12,6 +12,7 @@
     },
     "dependencies": {
         "@heroui/button": "^2.2.31",
+        "@hookform/resolvers": "^5.2.2",
         "@phosphor-icons/react": "^2.1.10",
         "@tailwindcss/vite": "^4.1.18",
         "axios": "^1.13.5",
@@ -22,10 +23,12 @@
         "radix-ui": "^1.4.3",
         "react": "^19.2.0",
         "react-dom": "^19.2.0",
+        "react-hook-form": "^7.71.1",
         "react-icons": "^5.5.0",
         "react-router-dom": "^7.13.0",
         "tailwind-merge": "^3.4.0",
-        "tailwindcss": "^4.1.18"
+        "tailwindcss": "^4.1.18",
+        "zod": "^4.3.6"
     },
     "devDependencies": {
         "@eslint/js": "^9.39.1",
