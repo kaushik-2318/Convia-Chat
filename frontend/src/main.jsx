@@ -6,11 +6,11 @@ import { BrowserRouter } from 'react-router-dom';
 // import { HelmetProvider } from "react-helmet-async";
 
 createRoot(document.getElementById('root')).render(
-    <StrictMode>
-        {/* <HelmetProvider> */}
-        <BrowserRouter>
-            <App />
-        </BrowserRouter>
-        {/* </HelmetProvider> */}
-    </StrictMode>
+  <StrictMode>
+    {/* <HelmetProvider> */}
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+    {/* </HelmetProvider> */}
+  </StrictMode>,
 );

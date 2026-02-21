@@ -4,47 +4,47 @@
 @import './fonts.css';
 
 * {
-    font-family: 'Outfit';
+  font-family: 'Outfit';
 }
 
 ::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 @theme {
-    --color-border: #1e293b;
-    --color-solid: #020617;
-    --color-dark: #02061780;
-    --color-indigo: #6366f1;
-    --color-purple: #a855f7;
-    --color-pink: #ec4899;
-    --color-separator: #475569;
+  --color-border: #1e293b;
+  --color-solid: #020617;
+  --color-dark: #02061780;
+  --color-indigo: #6366f1;
+  --color-purple: #a855f7;
+  --color-pink: #ec4899;
+  --color-separator: #475569;
 }
 
 .glow-hover {
-    transition: box-shadow 0.3s ease;
+  transition: box-shadow 0.3s ease;
 }
 
 .glow-hover:hover {
-    box-shadow:
-        0 0 12px var(--glow-color),
-        0 0 28px var(--glow-color);
+  box-shadow:
+    0 0 12px var(--glow-color),
+    0 0 28px var(--glow-color);
 }
 
 .logo-box-shadow {
-    filter: drop-shadow(0 0 15px rgba(99, 102, 241, 0.5));
+  filter: drop-shadow(0 0 15px rgba(99, 102, 241, 0.5));
 }
 
 .gradient-text {
-    background: linear-gradient(
-        to right,
-        var(--color-indigo),
-        var(--color-purple),
-        var(--color-pink)
-    );
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+  background: linear-gradient(
+    to right,
+    var(--color-indigo),
+    var(--color-purple),
+    var(--color-pink)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 input:-webkit-autofill,
@@ -52,12 +52,12 @@ input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 textarea:-webkit-autofill,
 select:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0px 1000px transparent inset;
-    box-shadow: 0 0 0px 1000px transparent inset;
+  -webkit-box-shadow: 0 0 0px 1000px transparent inset;
+  box-shadow: 0 0 0px 1000px transparent inset;
 
-    border-bottom: 1px solid rgb(203 213 225);
-    -webkit-text-fill-color: rgb(203 213 225);
-    caret-color: rgb(203 213 225);
+  border-bottom: 1px solid rgb(203 213 225);
+  -webkit-text-fill-color: rgb(203 213 225);
+  caret-color: rgb(203 213 225);
 
-    transition: background-color 9999s ease-in-out 0s;
+  transition: background-color 9999s ease-in-out 0s;
 }

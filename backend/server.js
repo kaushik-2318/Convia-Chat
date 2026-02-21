@@ -34,7 +34,7 @@ setInterval(
             console.error('❌ Self Ping Error:', error.response?.status || error.message);
         }
     },
-    1000 * 60 * 10
+    1000 * 60 * 10,
 );
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

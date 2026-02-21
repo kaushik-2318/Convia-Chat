@@ -6,282 +6,275 @@ import { MotionDiv } from '@/components/common/MotionWrapper';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
 } from '@/components/ui/dialog';
 import { Button } from '@heroui/button';
 import { GithubLogoIcon, InstagramLogoIcon } from '@phosphor-icons/react';
 
 export default function WelcomePage() {
-    const [url, setUrl] = useState('');
-    const [clickCoords, setClickCoords] = useState({
-        x: typeof window !== 'undefined' ? window.innerWidth / 2 : 0,
-        y: typeof window !== 'undefined' ? window.innerHeight / 2 : 0,
-    });
+  const [url, setUrl] = useState('');
+  const [clickCoords, setClickCoords] = useState({
+    x: typeof window !== 'undefined' ? window.innerWidth / 2 : 0,
+    y: typeof window !== 'undefined' ? window.innerHeight / 2 : 0,
+  });
 
-    useEffect(() => {
-        const handleFetch = async () => {
-            const resp = await axios.get('https://pget.vercel.app/');
-            setUrl(resp.data);
-        };
-        handleFetch();
-    }, []);
+  useEffect(() => {
+    const handleFetch = async () => {
+      const resp = await axios.get('https://pget.vercel.app/');
+      setUrl(resp.data);
+    };
+    handleFetch();
+  }, []);
 
-    const SocialArray = [
-        {
-            bg: '#2b3137',
-            link: 'https://github.com/kaushik-2318',
-            icon: <GithubLogoIcon color="#fafbfc" size={25} alt="github" />,
-        },
-        {
-            bg: 'radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%)',
-            link: 'https://instagram.com/kaushikverma.me',
-            icon: <InstagramLogoIcon color="#fff" size={25} alt="instagram" />,
-        },
-        {
-            bg: '#0A66C2',
-            link: 'https://www.linkedin.com/in/kaushikverma',
-            icon: <Linkedin color="#fff" alt="linkedin" />,
-        },
-    ];
+  const SocialArray = [
+    {
+      bg: '#2b3137',
+      link: 'https://github.com/kaushik-2318',
+      icon: <GithubLogoIcon color="#fafbfc" size={25} alt="github" />,
+    },
+    {
+      bg: 'radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%)',
+      link: 'https://instagram.com/kaushikverma.me',
+      icon: <InstagramLogoIcon color="#fff" size={25} alt="instagram" />,
+    },
+    {
+      bg: '#0A66C2',
+      link: 'https://www.linkedin.com/in/kaushikverma',
+      icon: <Linkedin color="#fff" alt="linkedin" />,
+    },
+  ];
 
-    return (
-        <div className="flex h-full w-full flex-col items-center justify-center px-5">
+  return (
+    <div className="flex h-full w-full flex-col items-center justify-center px-5">
+      <MotionDiv
+        initial="hidden"
+        animate="visible"
+        variants={{
+          hidden: { opacity: 0 },
+          visible: {
+            opacity: 1,
+            transition: {
+              staggerChildren: 0.1,
+              delayChildren: 0.1,
+            },
+          },
+        }}
+        style={{ '--glow-color': '#6366f1' }}
+        className="border-border bg-solid z-2 grid max-w-lg grid-cols-1 gap-10 rounded-2xl border p-5 md:max-w-2xl md:grid-cols-2 md:gap-0 lg:max-w-5xl lg:p-15 lg:py-14"
+      >
+        <div className="order-2 w-full space-y-4 text-center">
+          <MotionDiv
+            initial="hidden"
+            animate="visible"
+            variants={{
+              hidden: { opacity: 0, y: 20 },
+              visible: {
+                opacity: 1,
+                y: 0,
+                transition: { type: 'spring', stiffness: 100 },
+              },
+            }}
+          >
+            <div className="mb-4 text-4xl font-bold tracking-tight md:text-5xl">
+              Welcome to <br />
+              <span className="gradient-text md:text-6xl">Convia Chat</span>
+            </div>
+            <p className="mb-4 text-xl font-bold tracking-tight">
+              Connect beyond <span className="gradient-text">boundaries.</span>
+            </p>
+
+            <p className="text-gray-400">
+              A robust web-based Real-Time Chat App developed by{' '}
+              <Link to={url} target="_blank" className="text-indigo">
+                Kaushik Verma
+              </Link>
+              .
+            </p>
+            <div className="bg-separator my-5 hidden h-px w-full lg:block" />
             <MotionDiv
-                initial="hidden"
-                animate="visible"
-                variants={{
-                    hidden: { opacity: 0 },
-                    visible: {
-                        opacity: 1,
-                        transition: {
-                            staggerChildren: 0.1,
-                            delayChildren: 0.1,
-                        },
-                    },
-                }}
-                style={{ '--glow-color': '#6366f1' }}
-                className="border-border bg-solid z-2 grid max-w-lg grid-cols-1 gap-10 rounded-2xl border p-5 md:max-w-2xl md:grid-cols-2 md:gap-0 lg:max-w-5xl lg:p-15 lg:py-14"
+              initial="hidden"
+              animate="visible"
+              variants={{
+                hidden: { opacity: 0 },
+                visible: {
+                  opacity: 1,
+                  transition: { staggerChildren: 0.2 },
+                },
+              }}
+              className="hidden items-center justify-center gap-10 lg:flex"
             >
-                <div className="order-2 w-full space-y-4 text-center">
-                    <MotionDiv
-                        initial="hidden"
-                        animate="visible"
-                        variants={{
-                            hidden: { opacity: 0, y: 20 },
-                            visible: {
-                                opacity: 1,
-                                y: 0,
-                                transition: { type: 'spring', stiffness: 100 },
-                            },
-                        }}
-                    >
-                        <div className="mb-4 text-4xl font-bold tracking-tight md:text-5xl">
-                            Welcome to <br />
-                            <span className="gradient-text md:text-6xl">Convia Chat</span>
-                        </div>
-                        <p className="mb-4 text-xl font-bold tracking-tight">
-                            Connect beyond <span className="gradient-text">boundaries.</span>
-                        </p>
-
-                        <p className="text-gray-400">
-                            A robust web-based Real-Time Chat App developed by{' '}
-                            <Link to={url} target="_blank" className="text-indigo">
-                                Kaushik Verma
-                            </Link>
-                            .
-                        </p>
-                        <div className="bg-separator my-5 hidden h-px w-full lg:block" />
-                        <MotionDiv
-                            initial="hidden"
-                            animate="visible"
-                            variants={{
-                                hidden: { opacity: 0 },
-                                visible: {
-                                    opacity: 1,
-                                    transition: { staggerChildren: 0.2 },
-                                },
-                            }}
-                            className="hidden items-center justify-center gap-10 lg:flex"
-                        >
-                            {SocialArray.map((social, index) => (
-                                <MotionDiv
-                                    key={index}
-                                    variants={{
-                                        hidden: { opacity: 0, y: 20 },
-                                        visible: {
-                                            opacity: 1,
-                                            y: 0,
-                                            transition: {
-                                                type: 'spring',
-                                                stiffness: 200,
-                                            },
-                                        },
-                                    }}
-                                >
-                                    <Link to={social.link} target="_blank">
-                                        <Button
-                                            className="h-10 w-10 rounded-full p-0 duration-200 hover:scale-110"
-                                            style={{ background: social.bg }}
-                                        >
-                                            {social.icon}
-                                        </Button>
-                                    </Link>
-                                </MotionDiv>
-                            ))}
-                        </MotionDiv>
-                    </MotionDiv>
-                </div>
-
+              {SocialArray.map((social, index) => (
                 <MotionDiv
-                    initial="hidden"
-                    animate="visible"
-                    variants={{
-                        hidden: { opacity: 0, y: 20 },
-                        visible: {
-                            opacity: 1,
-                            y: 0,
-                            transition: { type: 'spring', stiffness: 100 },
-                        },
-                    }}
-                    className="order-1 flex items-center justify-center md:order-2"
-                >
-                    <div className="relative flex h-40 w-40 items-center justify-center md:h-60 md:w-60">
-                        <div className="from-indigo to-purple absolute inset-0 animate-pulse rounded-full bg-linear-to-tr opacity-10 blur-3xl" />
-
-                        <GlassCard variant="neo" className="h-full w-full rounded-2xl">
-                            <div className="border-border absolute top-1/2 left-1/2 h-[70%] w-[70%] -translate-x-1/2 -translate-y-1/2 rounded-full border" />
-                            <div className="border-border absolute top-1/2 left-1/2 h-[85%] w-[85%] -translate-x-1/2 -translate-y-1/2 rounded-full border" />
-                            <div className="flex h-full w-full items-center justify-center">
-                                <Logo className="logo-box-shadow h-20 w-20 md:h-40 md:w-40" />
-                            </div>
-                        </GlassCard>
-                    </div>
-                </MotionDiv>
-            </MotionDiv>
-
-            <MotionDiv
-                initial="hidden"
-                animate="visible"
-                variants={{
-                    hidden: { opacity: 0, y: -20 },
+                  key={index}
+                  variants={{
+                    hidden: { opacity: 0, y: 20 },
                     visible: {
-                        opacity: 1,
-                        y: 0,
-                        transition: {
-                            type: 'spring',
-                            stiffness: 100,
-                            delay: 0.2,
-                            staggerChildren: 0.5,
-                        },
+                      opacity: 1,
+                      y: 0,
+                      transition: {
+                        type: 'spring',
+                        stiffness: 200,
+                      },
                     },
-                }}
-                className="flex w-full flex-col items-center justify-center md:w-2xl md:flex-row"
-            >
-                <Link to="/auth/register" className="relative z-1 h-9 w-full max-w-100 md:w-1/2">
-                    <MotionDiv
-                        variants={{
-                            hidden: { opacity: 0, y: -20 },
-                            visible: {
-                                opacity: 1,
-                                y: 0,
-                                transition: { duration: 0.2 },
-                            },
-                        }}
-                        className="absolute -top-2 flex h-full w-full flex-col justify-center gap-4 md:w-full"
-                    >
-                        <Button className="flex transform items-center justify-center gap-2 rounded-b-xl bg-white px-4 py-5 pt-7.5 font-bold text-slate-950 shadow-xl shadow-white/10 transition-all hover:scale-105 active:scale-95">
-                            Sign Up Now
-                            <ArrowRight className="h-5 w-5" />
-                        </Button>
-                    </MotionDiv>
-                </Link>
-
-                <Link
-                    to="/auth/login"
-                    className="relative z-0 h-9 w-full max-w-100 md:z-1 md:w-1/2"
+                  }}
                 >
-                    <MotionDiv
-                        variants={{
-                            hidden: { opacity: 0, y: -20 },
-                            visible: {
-                                opacity: 1,
-                                y: 0,
-                                transition: { duration: 0.2 },
-                            },
-                        }}
-                        className="absolute -top-2 flex h-full w-full flex-col justify-center gap-4 md:w-full"
+                  <Link to={social.link} target="_blank">
+                    <Button
+                      className="h-10 w-10 rounded-full p-0 duration-200 hover:scale-110"
+                      style={{ background: social.bg }}
                     >
-                        <Button className="border-border bg-dark flex transform items-center justify-center rounded-b-xl border px-4 py-5 pt-7.5 font-semibold text-white transition-all hover:scale-105 active:scale-95">
-                            Login
-                        </Button>
-                    </MotionDiv>
-                </Link>
+                      {social.icon}
+                    </Button>
+                  </Link>
+                </MotionDiv>
+              ))}
             </MotionDiv>
-
-            <Dialog>
-                <DialogTrigger
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        setClickCoords({ x: e.clientX, y: e.clientY });
-                    }}
-                    className="absolute bottom-4 w-[90%] max-w-lg cursor-pointer"
-                >
-                    <MotionDiv
-                        initial="hidden"
-                        animate="visible"
-                        variants={{
-                            hidden: { opacity: 0, y: 100 },
-                            visible: {
-                                opacity: 1,
-                                y: 0,
-                                transition: {
-                                    duration: 0.5,
-                                    type: 'spring',
-                                    stiffness: 100,
-                                },
-                            },
-                        }}
-                    >
-                        <GlassCard
-                            variant="neo"
-                            className="border-border w-full rounded-2xl p-5 text-white"
-                        >
-                            <div className="flex items-center gap-3 text-center">
-                                <span className="bg-separator h-px flex-1"></span>
-                                What is Convia Chat?
-                                <span className="bg-separator h-px flex-1"></span>
-                            </div>
-                        </GlassCard>
-                    </MotionDiv>
-                </DialogTrigger>
-                <DialogContent
-                    className={'text-white backdrop-blur-2xl'}
-                    variant="neo"
-                    clickCoords={clickCoords}
-                >
-                    <DialogHeader className={'space-y-2.5'}>
-                        <DialogTitle className={'text-xl'}>What is Convia Chat?</DialogTitle>
-                        <DialogDescription className={'text-justify'}>
-                            Convia Chat is a real-time web-based chat application developed by{' '}
-                            <Link to={url} target="_blank" className="text-indigo">
-                                Kaushik Verma
-                            </Link>
-                            . Boasting not only a visually appealing UI but also packed with an
-                            array of enticing features, Convia Chat is designed to provide with the
-                            best user experience. Powered by the dynamic MERN stack and enriched
-                            with the sleek design elements of Tailwind CSS, this application
-                            delivers a seamless chatting experience. From connecting with friends to
-                            instant messaging system, Convia Chat ensures not just connectivity but
-                            a symphony of interactivity and speed for its users.
-                        </DialogDescription>
-                    </DialogHeader>
-                </DialogContent>
-            </Dialog>
+          </MotionDiv>
         </div>
-    );
+
+        <MotionDiv
+          initial="hidden"
+          animate="visible"
+          variants={{
+            hidden: { opacity: 0, y: 20 },
+            visible: {
+              opacity: 1,
+              y: 0,
+              transition: { type: 'spring', stiffness: 100 },
+            },
+          }}
+          className="order-1 flex items-center justify-center md:order-2"
+        >
+          <div className="relative flex h-40 w-40 items-center justify-center md:h-60 md:w-60">
+            <div className="from-indigo to-purple absolute inset-0 animate-pulse rounded-full bg-linear-to-tr opacity-10 blur-3xl" />
+
+            <GlassCard variant="neo" className="h-full w-full rounded-2xl">
+              <div className="border-border absolute top-1/2 left-1/2 h-[70%] w-[70%] -translate-x-1/2 -translate-y-1/2 rounded-full border" />
+              <div className="border-border absolute top-1/2 left-1/2 h-[85%] w-[85%] -translate-x-1/2 -translate-y-1/2 rounded-full border" />
+              <div className="flex h-full w-full items-center justify-center">
+                <Logo className="logo-box-shadow h-20 w-20 md:h-40 md:w-40" />
+              </div>
+            </GlassCard>
+          </div>
+        </MotionDiv>
+      </MotionDiv>
+
+      <MotionDiv
+        initial="hidden"
+        animate="visible"
+        variants={{
+          hidden: { opacity: 0, y: -20 },
+          visible: {
+            opacity: 1,
+            y: 0,
+            transition: {
+              type: 'spring',
+              stiffness: 100,
+              delay: 0.2,
+              staggerChildren: 0.5,
+            },
+          },
+        }}
+        className="flex w-full flex-col items-center justify-center md:w-2xl md:flex-row"
+      >
+        <Link to="/auth/register" className="relative z-1 h-9 w-full max-w-100 md:w-1/2">
+          <MotionDiv
+            variants={{
+              hidden: { opacity: 0, y: -20 },
+              visible: {
+                opacity: 1,
+                y: 0,
+                transition: { duration: 0.2 },
+              },
+            }}
+            className="absolute -top-2 flex h-full w-full flex-col justify-center gap-4 md:w-full"
+          >
+            <Button className="flex transform items-center justify-center gap-2 rounded-b-xl bg-white px-4 py-5 pt-7.5 font-bold text-slate-950 shadow-xl shadow-white/10 transition-all hover:scale-105 active:scale-95">
+              Sign Up Now
+              <ArrowRight className="h-5 w-5" />
+            </Button>
+          </MotionDiv>
+        </Link>
+
+        <Link to="/auth/login" className="relative z-0 h-9 w-full max-w-100 md:z-1 md:w-1/2">
+          <MotionDiv
+            variants={{
+              hidden: { opacity: 0, y: -20 },
+              visible: {
+                opacity: 1,
+                y: 0,
+                transition: { duration: 0.2 },
+              },
+            }}
+            className="absolute -top-2 flex h-full w-full flex-col justify-center gap-4 md:w-full"
+          >
+            <Button className="border-border bg-dark flex transform items-center justify-center rounded-b-xl border px-4 py-5 pt-7.5 font-semibold text-white transition-all hover:scale-105 active:scale-95">
+              Login
+            </Button>
+          </MotionDiv>
+        </Link>
+      </MotionDiv>
+
+      <Dialog>
+        <DialogTrigger
+          onClick={(e) => {
+            e.stopPropagation();
+            setClickCoords({ x: e.clientX, y: e.clientY });
+          }}
+          className="absolute bottom-4 w-[90%] max-w-lg cursor-pointer"
+        >
+          <MotionDiv
+            initial="hidden"
+            animate="visible"
+            variants={{
+              hidden: { opacity: 0, y: 100 },
+              visible: {
+                opacity: 1,
+                y: 0,
+                transition: {
+                  duration: 0.5,
+                  type: 'spring',
+                  stiffness: 100,
+                },
+              },
+            }}
+          >
+            <GlassCard variant="neo" className="border-border w-full rounded-2xl p-5 text-white">
+              <div className="flex items-center gap-3 text-center">
+                <span className="bg-separator h-px flex-1"></span>
+                What is Convia Chat?
+                <span className="bg-separator h-px flex-1"></span>
+              </div>
+            </GlassCard>
+          </MotionDiv>
+        </DialogTrigger>
+        <DialogContent
+          className={'text-white backdrop-blur-2xl'}
+          variant="neo"
+          clickCoords={clickCoords}
+        >
+          <DialogHeader className={'space-y-2.5'}>
+            <DialogTitle className={'text-xl'}>What is Convia Chat?</DialogTitle>
+            <DialogDescription className={'text-justify'}>
+              Convia Chat is a real-time web-based chat application developed by{' '}
+              <Link to={url} target="_blank" className="text-indigo">
+                Kaushik Verma
+              </Link>
+              . Boasting not only a visually appealing UI but also packed with an array of enticing
+              features, Convia Chat is designed to provide with the best user experience. Powered by
+              the dynamic MERN stack and enriched with the sleek design elements of Tailwind CSS,
+              this application delivers a seamless chatting experience. From connecting with friends
+              to instant messaging system, Convia Chat ensures not just connectivity but a symphony
+              of interactivity and speed for its users.
+            </DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
+    </div>
+  );
 }

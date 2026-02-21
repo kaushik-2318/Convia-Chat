@@ -7,46 +7,46 @@ import Loadable from '@/components/Loadable';
 import { DEFAULT_AUTH, DEFAULT_PATH } from '@/config';
 
 export default function Router() {
-    return useRoutes([
+  return useRoutes([
+    {
+      path: '/auth',
+      element: <AuthLayout />,
+      children: [
         {
-            path: '/auth',
-            element: <AuthLayout />,
-            children: [
-                {
-                    element: <Navigate to={DEFAULT_AUTH} replace />,
-                    index: true,
-                },
-                { path: 'welcome', element: <WelcomePage /> },
-                { path: 'login', element: <LoginPage /> },
-                { path: 'register', element: <RegisterPage /> },
-                { path: 'verify', element: <VerifyPage /> },
-                { path: 'forgot-password', element: <ForgotPasswordPage /> },
-                { path: 'reset-password', element: <ResetPasswordPage /> },
-            ],
+          element: <Navigate to={DEFAULT_AUTH} replace />,
+          index: true,
         },
+        { path: 'welcome', element: <WelcomePage /> },
+        { path: 'login', element: <LoginPage /> },
+        { path: 'register', element: <RegisterPage /> },
+        { path: 'verify', element: <VerifyPage /> },
+        { path: 'forgot-password', element: <ForgotPasswordPage /> },
+        { path: 'reset-password', element: <ResetPasswordPage /> },
+      ],
+    },
+    {
+      path: '/',
+      element: (
+        <SidebarProvider>
+          <DashboardLayout />
+        </SidebarProvider>
+      ),
+      children: [
         {
-            path: '/',
-            element: (
-                <SidebarProvider>
-                    <DashboardLayout />
-                </SidebarProvider>
-            ),
-            children: [
-                {
-                    element: <Navigate to={DEFAULT_PATH} replace />,
-                    index: true,
-                },
-                { path: 'app', element: <GeneralApp /> },
-                { path: 'group', element: <GroupChat /> },
-                { path: 'profile', element: <ProfilePage /> },
-                { path: 'contact', element: <ContactPage /> },
-                { path: 'settings', element: <Settings /> },
-                { path: '404', element: <Page404 /> },
-                { path: '*', element: <Navigate to="/404" replace /> },
-            ],
+          element: <Navigate to={DEFAULT_PATH} replace />,
+          index: true,
         },
+        { path: 'app', element: <GeneralApp /> },
+        { path: 'group', element: <GroupChat /> },
+        { path: 'profile', element: <ProfilePage /> },
+        { path: 'contact', element: <ContactPage /> },
+        { path: 'settings', element: <Settings /> },
+        { path: '404', element: <Page404 /> },
         { path: '*', element: <Navigate to="/404" replace /> },
-    ]);
+      ],
+    },
+    { path: '*', element: <Navigate to="/404" replace /> },
+  ]);
 }
 
 const WelcomePage = Loadable(lazy(() => import('../pages/auth/WelcomePage')));
