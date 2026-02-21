@@ -1,9 +1,10 @@
-import React, { lazy, Suspense } from 'react';
+import React, { lazy } from 'react';
 import { useRoutes, Navigate } from 'react-router-dom';
 import AuthLayout from '@/layout/auth';
 import { SidebarProvider } from '@/components/ui/sidebar';
 import DashboardLayout from '@/layout/dashboard';
 import Loadable from '@/components/Loadable';
+import { DEFAULT_AUTH, DEFAULT_PATH } from '@/config';
 
 export default function Router() {
     return useRoutes([
@@ -12,7 +13,7 @@ export default function Router() {
             element: <AuthLayout />,
             children: [
                 {
-                    element: <Navigate to={'/auth/welcome'} replace />,
+                    element: <Navigate to={DEFAULT_AUTH} replace />,
                     index: true,
                 },
                 { path: 'welcome', element: <WelcomePage /> },
@@ -31,7 +32,10 @@ export default function Router() {
                 </SidebarProvider>
             ),
             children: [
-                { element: <Navigate to={'/app'} replace />, index: true },
+                {
+                    element: <Navigate to={DEFAULT_PATH} replace />,
+                    index: true,
+                },
                 { path: 'app', element: <GeneralApp /> },
                 { path: 'group', element: <GroupChat /> },
                 { path: 'profile', element: <ProfilePage /> },

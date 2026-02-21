@@ -52,12 +52,12 @@ input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 textarea:-webkit-autofill,
 select:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0px 1000px transparent inset;
-  box-shadow: 0 0 0px 1000px transparent inset;
+    -webkit-box-shadow: 0 0 0px 1000px transparent inset;
+    box-shadow: 0 0 0px 1000px transparent inset;
 
-  border-bottom: 1px solid rgb(203 213 225);
-  -webkit-text-fill-color: rgb(203 213 225);
-  caret-color: rgb(203 213 225);
+    border-bottom: 1px solid rgb(203 213 225);
+    -webkit-text-fill-color: rgb(203 213 225);
+    caret-color: rgb(203 213 225);
 
-  transition: background-color 9999s ease-in-out 0s;
+    transition: background-color 9999s ease-in-out 0s;
 }

@@ -1,27 +1,53 @@
 import { GlassCard } from '@/components/common/GlassCard';
-import { Logo } from '@/components/common/Logo';
 import { MotionDiv } from '@/components/common/MotionWrapper';
 import { Button } from '@heroui/button';
 import { FcGoogle } from 'react-icons/fc';
-import { ArrowRight, Eye, EyeOff, Loader2, Lock, Mail } from 'lucide-react';
+import { ArrowRight, Loader2, Mail } from 'lucide-react';
 import { RiGithubLine } from 'react-icons/ri';
 import { FaLinkedinIn } from 'react-icons/fa6';
-import React, { useRef, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
+import AuthHeader from '@/components/auth/AuthHeader';
+import CustomInput from '@/components/auth/CustomInput';
+import CustomPassword from '@/components/auth/CustomPassword';
+import SocialButton from '@/components/auth/SocialButton';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import z from 'zod';
+
+export const loginSchema = z.object({
+    email: z
+        .string({ required_error: 'Email Required' })
+        .email('Invalid Email'),
+
+    password: z
+        .string({ required_error: 'Password Required' })
+        .min(8, 'Password must be at least 8 characters long')
+        .regex(/[0-9]/, 'Password requires a number')
+        .regex(/[a-z]/, 'Password requires a lowercase letter')
+        .regex(/[A-Z]/, 'Password requires an uppercase letter')
+        .regex(/[^\w]/, 'Password requires a symbol'),
+});
 
 export default function LoginPage() {
-    const [showPassword, setShowPassword] = useState(false);
-    const inputRef = useRef(null);
+    const {
+        register,
+        handleSubmit,
+        formState: { errors, isSubmitting },
+    } = useForm({
+        resolver: zodResolver(loginSchema),
+        mode: 'onTouched',
+        reValidateMode: 'onChange',
+        defaultValues: {
+            email: '',
+            password: '',
+        },
+    });
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log('Form submitted');
+    const onSubmit = (data) => {
+        console.log('✅ Final Validated Form Data:', data);
     };
 
-    const handleToggle = () => {
-        setShowPassword((prev) => !prev);
-        inputRef.current.focus();
-    };
     return (
         <MotionDiv className="flex h-full w-full flex-col items-center justify-center p-5">
             <GlassCard
@@ -37,19 +63,7 @@ export default function LoginPage() {
                         transition: { type: 'spring', duration: 1 },
                     }}
                 >
-                    <div className="flex flex-col items-center">
-                        <div className="mb-2 h-24 w-24">
-                            <Logo className="logo-box-shadow h-full w-full" />
-                        </div>
-                        <h1 className="text-5xl font-bold tracking-tight sm:text-7xl">
-                            Convia
-                        </h1>
-                        <p className="text-center text-xl font-bold tracking-tight sm:text-2xl">
-                            Connect beyond{' '}
-                            <span className="gradient-text">boundaries.</span>
-                        </p>
-                    </div>
-
+                    <AuthHeader />
                     <div className="my-4">
                         <h2 className="text-center text-xl font-bold text-white">
                             Welcome Back{' '}
@@ -58,64 +72,33 @@ export default function LoginPage() {
                     </div>
 
                     <div className="w-full max-w-md px-5 sm:px-10">
-                        <form onSubmit={handleSubmit}>
+                        <form onSubmit={handleSubmit(onSubmit)}>
                             <div className="flex flex-col gap-5 border-slate-300 text-slate-300 sm:gap-7">
-                                <div className="relative w-full">
-                                    <input
-                                        type="email"
-                                        id="email"
-                                        className="peer w-full border-b bg-transparent py-2 pl-10 placeholder-transparent transition-all duration-300 outline-none focus:pr-10 focus:pl-2 [:not(:placeholder-shown)]:pr-10 [:not(:placeholder-shown)]:pl-2"
-                                        placeholder=" "
-                                    />
-                                    <label
-                                        htmlFor="email"
-                                        className="pointer-events-none absolute top-1/2 left-10 -translate-y-1/2 cursor-text text-sm transition-all duration-300 peer-focus:-top-1 peer-focus:left-0 peer-focus:text-xs peer-[:not(:placeholder-shown)]:-top-1 peer-[:not(:placeholder-shown)]:left-0 peer-[:not(:placeholder-shown)]:text-xs sm:text-lg"
-                                    >
-                                        Email
-                                    </label>
-                                    <Mail className="pointer-events-none absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 transition-all duration-500 peer-focus:left-[calc(100%-28px)] peer-[:not(:placeholder-shown)]:left-[calc(100%-28px)]" />
-                                </div>
-
-                                <div className="relative w-full">
-                                    <input
-                                        ref={inputRef}
-                                        type={
-                                            showPassword ? 'text' : 'password'
-                                        }
-                                        id="password"
-                                        placeholder=" "
-                                        className="peer w-full border-b bg-transparent py-2 pl-10 placeholder-transparent transition-all duration-300 outline-none focus:pr-10 focus:pl-2 [:not(:placeholder-shown)]:pr-10 [:not(:placeholder-shown)]:pl-2"
-                                    />
-
-                                    <label
-                                        htmlFor="password"
-                                        className="pointer-events-none absolute top-1/2 left-10 -translate-y-1/2 cursor-text text-sm transition-all duration-300 peer-focus:-top-1 peer-focus:left-0 peer-focus:text-xs peer-[:not(:placeholder-shown)]:-top-1 peer-[:not(:placeholder-shown)]:left-0 peer-[:not(:placeholder-shown)]:text-xs sm:text-lg"
-                                    >
-                                        Password
-                                    </label>
-
-                                    <Lock className="pointer-events-none absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 opacity-100 transition-all duration-500 peer-focus:left-[calc(100%-28px)] peer-focus:opacity-0 peer-[:not(:placeholder-shown)]:left-[calc(100%-28px)] peer-[:not(:placeholder-shown)]:opacity-0" />
-
-                                    <Button
-                                        onMouseDown={(e) => e.preventDefault()}
-                                        type="button"
-                                        onPress={handleToggle}
-                                        className="pointer-events-none absolute top-1/2 left-0 -translate-y-1/2 rounded-full p-0 opacity-0 transition-all duration-500 peer-focus:pointer-events-auto peer-focus:left-[calc(100%-28px)] peer-focus:opacity-100 peer-[:not(:placeholder-shown)]:pointer-events-auto peer-[:not(:placeholder-shown)]:left-[calc(100%-28px)] peer-[:not(:placeholder-shown)]:opacity-100"
-                                    >
-                                        {showPassword ? (
-                                            <EyeOff className="h-5 w-5" />
-                                        ) : (
-                                            <Eye className="h-5 w-5" />
-                                        )}
-                                    </Button>
-                                </div>
+                                <CustomInput
+                                    register={register}
+                                    errors={errors}
+                                    name="email"
+                                    label="Email"
+                                    icon={Mail}
+                                />
+                                <CustomPassword
+                                    register={register}
+                                    errors={errors}
+                                    name="password"
+                                    label="Password"
+                                />
+                            </div>
+                            <div className="mt-5 cursor-pointer text-right text-sm text-slate-500 italic duration-200 hover:text-slate-300 hover:underline">
+                                <Link to="/auth/forgot-password">
+                                    Forgot Password?
+                                </Link>
                             </div>
 
                             <Button
                                 type="submit"
-                                className="from-indigo via-pink to-purple my-5 flex h-14 w-full items-center justify-center gap-2 rounded-xl bg-linear-to-r text-lg font-bold text-white shadow-lg transition-all hover:scale-[1.02] hover:shadow-indigo-500/50 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-70 sm:my-7"
+                                className="from-indigo via-pink to-purple my-5 flex h-14 w-full items-center justify-center gap-2 rounded-xl bg-linear-to-r text-lg font-bold text-white shadow-lg transition-all hover:scale-[1.02] hover:shadow-indigo-500/50 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-70"
                             >
-                                {false ? (
+                                {isSubmitting ? (
                                     <Loader2 className="animate-spin" />
                                 ) : (
                                     <>
@@ -142,65 +125,19 @@ export default function LoginPage() {
                                     },
                                 }}
                             >
-                                <MotionDiv
-                                    variants={{
-                                        hidden: { opacity: 0, y: 20 },
-                                        visible: {
-                                            opacity: 1,
-                                            y: 0,
-                                            transition: {
-                                                type: 'spring',
-                                                stiffness: 200,
-                                            },
-                                        },
-                                    }}
-                                >
-                                    <Link to={'#'}>
-                                        <Button className="h-10 w-10 rounded-full p-0 hover:scale-110">
-                                            <FcGoogle className="text-2xl" />
-                                        </Button>
-                                    </Link>
-                                </MotionDiv>
-
-                                <MotionDiv
-                                    variants={{
-                                        hidden: { opacity: 0, y: 20 },
-                                        visible: {
-                                            opacity: 1,
-                                            y: 0,
-                                            transition: {
-                                                type: 'spring',
-                                                stiffness: 200,
-                                            },
-                                        },
-                                    }}
-                                >
-                                    <Link to={''} target="_blank">
-                                        <Button className="h-10 w-10 rounded-full p-0 hover:scale-110">
-                                            <RiGithubLine className="text-2xl" />
-                                        </Button>
-                                    </Link>
-                                </MotionDiv>
-
-                                <MotionDiv
-                                    variants={{
-                                        hidden: { opacity: 0, y: 20 },
-                                        visible: {
-                                            opacity: 1,
-                                            y: 0,
-                                            transition: {
-                                                type: 'spring',
-                                                stiffness: 200,
-                                            },
-                                        },
-                                    }}
-                                >
-                                    <Link to={''} target="_blank">
-                                        <Button className="h-10 w-10 rounded-full p-0 hover:scale-110">
-                                            <FaLinkedinIn className="text-2xl text-blue-500" />
-                                        </Button>
-                                    </Link>
-                                </MotionDiv>
+                                <SocialButton
+                                    href={''}
+                                    icon={<FcGoogle className="text-2xl" />}
+                                />
+                                <SocialButton
+                                    href={''}
+                                    icon={<RiGithubLine className="text-2xl" />}
+                                />
+                                <SocialButton
+                                    href={''}
+                                    icon={<FaLinkedinIn className="text-2xl" />}
+                                    className={'text-blue-600'}
+                                />
                             </MotionDiv>
                         </form>
 
