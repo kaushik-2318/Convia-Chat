@@ -1,13 +1,6 @@
 import React from 'react';
 
-export default function CustomInput({
-    register,
-    type = 'text',
-    errors,
-    name,
-    label,
-    icon: Icon,
-}) {
+export default function CustomInput({ register, type = 'text', errors, name, label, icon: Icon }) {
     return (
         <div className="relative w-full">
             <input

@@ -1,4 +1,0 @@
-#!/bin/sh
-echo "Running Prettier on all files..."
-npx prettier --write .
-git add .

@@ -24,10 +24,7 @@ const registerSchema = z
             .trim()
             .min(3, 'Name must be at least 3 characters')
             .max(16, 'Name cannot be more than 16 characters long')
-            .regex(
-                /^[a-zA-Z]+( [a-zA-Z]+)*$/,
-                'Name can only contain alphabets'
-            ),
+            .regex(/^[a-zA-Z]+( [a-zA-Z]+)*$/, 'Name can only contain alphabets'),
 
         email: z
             .string({ required_error: 'Email is required' })
@@ -163,11 +160,7 @@ export default function RegisterPage() {
 
                     <div className="w-full max-w-md px-5 sm:px-10">
                         <form
-                            onSubmit={
-                                step === 2
-                                    ? handleSubmit(handleFinalSubmit)
-                                    : handleNextStep
-                            }
+                            onSubmit={step === 2 ? handleSubmit(handleFinalSubmit) : handleNextStep}
                             className="space-y-5"
                         >
                             {renderStepContent()}
@@ -175,9 +168,7 @@ export default function RegisterPage() {
                             <div className="mt-7 flex items-center gap-5">
                                 <Button
                                     type="button"
-                                    onPress={() =>
-                                        setStep((prev) => Math.max(1, prev - 1))
-                                    }
+                                    onPress={() => setStep((prev) => Math.max(1, prev - 1))}
                                     className={cn(
                                         'border-border h-14 rounded-xl border text-white shadow-lg transition-all hover:scale-[1.02] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-70',
                                         step === 1 ? 'hidden' : ''
@@ -218,10 +209,7 @@ export default function RegisterPage() {
                                     },
                                 }}
                             >
-                                <SocialButton
-                                    href={''}
-                                    icon={<FcGoogle className="text-2xl" />}
-                                />
+                                <SocialButton href={''} icon={<FcGoogle className="text-2xl" />} />
                                 <SocialButton
                                     href={''}
                                     icon={<RiGithubLine className="text-2xl" />}

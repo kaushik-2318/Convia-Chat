@@ -23,11 +23,7 @@ export const Logo = ({ className = '' }) => {
                 </linearGradient>
                 <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
                     <feGaussianBlur stdDeviation="3" result="blur" />
-                    <feComposite
-                        in="SourceGraphic"
-                        in2="blur"
-                        operator="over"
-                    />
+                    <feComposite in="SourceGraphic" in2="blur" operator="over" />
                 </filter>
             </defs>
 
@@ -42,13 +38,7 @@ export const Logo = ({ className = '' }) => {
             />
 
             {/* Accent dot representing connection/active status */}
-            <circle
-                cx="72"
-                cy="40"
-                r="9"
-                fill="url(#convia-gradient)"
-                filter="url(#glow)"
-            />
+            <circle cx="72" cy="40" r="9" fill="url(#convia-gradient)" filter="url(#glow)" />
         </svg>
     );
 };

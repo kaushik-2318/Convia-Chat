@@ -82,22 +82,15 @@ export default function WelcomePage() {
                     >
                         <div className="mb-4 text-4xl font-bold tracking-tight md:text-5xl">
                             Welcome to <br />
-                            <span className="gradient-text md:text-6xl">
-                                Convia Chat
-                            </span>
+                            <span className="gradient-text md:text-6xl">Convia Chat</span>
                         </div>
                         <p className="mb-4 text-xl font-bold tracking-tight">
-                            Connect beyond{' '}
-                            <span className="gradient-text">boundaries.</span>
+                            Connect beyond <span className="gradient-text">boundaries.</span>
                         </p>
 
                         <p className="text-gray-400">
                             A robust web-based Real-Time Chat App developed by{' '}
-                            <Link
-                                to={url}
-                                target="_blank"
-                                className="text-indigo"
-                            >
+                            <Link to={url} target="_blank" className="text-indigo">
                                 Kaushik Verma
                             </Link>
                             .
@@ -160,10 +153,7 @@ export default function WelcomePage() {
                     <div className="relative flex h-40 w-40 items-center justify-center md:h-60 md:w-60">
                         <div className="from-indigo to-purple absolute inset-0 animate-pulse rounded-full bg-linear-to-tr opacity-10 blur-3xl" />
 
-                        <GlassCard
-                            variant="neo"
-                            className="h-full w-full rounded-2xl"
-                        >
+                        <GlassCard variant="neo" className="h-full w-full rounded-2xl">
                             <div className="border-border absolute top-1/2 left-1/2 h-[70%] w-[70%] -translate-x-1/2 -translate-y-1/2 rounded-full border" />
                             <div className="border-border absolute top-1/2 left-1/2 h-[85%] w-[85%] -translate-x-1/2 -translate-y-1/2 rounded-full border" />
                             <div className="flex h-full w-full items-center justify-center">
@@ -192,10 +182,7 @@ export default function WelcomePage() {
                 }}
                 className="flex w-full flex-col items-center justify-center md:w-2xl md:flex-row"
             >
-                <Link
-                    to="/auth/register"
-                    className="relative z-1 h-9 w-full max-w-100 md:w-1/2"
-                >
+                <Link to="/auth/register" className="relative z-1 h-9 w-full max-w-100 md:w-1/2">
                     <MotionDiv
                         variants={{
                             hidden: { opacity: 0, y: -20 },
@@ -278,29 +265,19 @@ export default function WelcomePage() {
                     clickCoords={clickCoords}
                 >
                     <DialogHeader className={'space-y-2.5'}>
-                        <DialogTitle className={'text-xl'}>
-                            What is Convia Chat?
-                        </DialogTitle>
+                        <DialogTitle className={'text-xl'}>What is Convia Chat?</DialogTitle>
                         <DialogDescription className={'text-justify'}>
-                            Convia Chat is a real-time web-based chat
-                            application developed by{' '}
-                            <Link
-                                to={url}
-                                target="_blank"
-                                className="text-indigo"
-                            >
+                            Convia Chat is a real-time web-based chat application developed by{' '}
+                            <Link to={url} target="_blank" className="text-indigo">
                                 Kaushik Verma
                             </Link>
-                            . Boasting not only a visually appealing UI but also
-                            packed with an array of enticing features, Convia
-                            Chat is designed to provide with the best user
-                            experience. Powered by the dynamic MERN stack and
-                            enriched with the sleek design elements of Tailwind
-                            CSS, this application delivers a seamless chatting
-                            experience. From connecting with friends to instant
-                            messaging system, Convia Chat ensures not just
-                            connectivity but a symphony of interactivity and
-                            speed for its users.
+                            . Boasting not only a visually appealing UI but also packed with an
+                            array of enticing features, Convia Chat is designed to provide with the
+                            best user experience. Powered by the dynamic MERN stack and enriched
+                            with the sleek design elements of Tailwind CSS, this application
+                            delivers a seamless chatting experience. From connecting with friends to
+                            instant messaging system, Convia Chat ensures not just connectivity but
+                            a symphony of interactivity and speed for its users.
                         </DialogDescription>
                     </DialogHeader>
                 </DialogContent>

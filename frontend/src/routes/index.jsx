@@ -53,23 +53,13 @@ const WelcomePage = Loadable(lazy(() => import('../pages/auth/WelcomePage')));
 const LoginPage = Loadable(lazy(() => import('../pages/auth/LoginPage')));
 const RegisterPage = Loadable(lazy(() => import('../pages/auth/RegisterPage')));
 const VerifyPage = Loadable(lazy(() => import('../pages/auth/VerifyPage')));
-const ForgotPasswordPage = Loadable(
-    lazy(() => import('../pages/auth/ForgotPasswordPage'))
-);
-const ResetPasswordPage = Loadable(
-    lazy(() => import('../pages/auth/ResetPasswordPage'))
-);
+const ForgotPasswordPage = Loadable(lazy(() => import('../pages/auth/ForgotPasswordPage')));
+const ResetPasswordPage = Loadable(lazy(() => import('../pages/auth/ResetPasswordPage')));
 
-const GeneralApp = Loadable(
-    lazy(() => import('../pages/dashboard/GeneralApp'))
-);
+const GeneralApp = Loadable(lazy(() => import('../pages/dashboard/GeneralApp')));
 const GroupChat = Loadable(lazy(() => import('../pages/dashboard/GroupChat')));
-const ProfilePage = Loadable(
-    lazy(() => import('../pages/dashboard/ProfilePage'))
-);
-const ContactPage = Loadable(
-    lazy(() => import('../pages/dashboard/ContactPage'))
-);
+const ProfilePage = Loadable(lazy(() => import('../pages/dashboard/ProfilePage')));
+const ContactPage = Loadable(lazy(() => import('../pages/dashboard/ContactPage')));
 const Settings = Loadable(lazy(() => import('../pages/dashboard/Settings')));
 
 // const TnCPage = Loadable(lazy(() => import("../pages/docs/TnC")));

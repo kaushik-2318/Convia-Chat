@@ -16,9 +16,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import z from 'zod';
 
 export const loginSchema = z.object({
-    email: z
-        .string({ required_error: 'Email Required' })
-        .email('Invalid Email'),
+    email: z.string({ required_error: 'Email Required' }).email('Invalid Email'),
 
     password: z
         .string({ required_error: 'Password Required' })
@@ -66,8 +64,7 @@ export default function LoginPage() {
                     <AuthHeader />
                     <div className="my-4">
                         <h2 className="text-center text-xl font-bold text-white">
-                            Welcome Back{' '}
-                            <span className="gradient-text">Cheif!</span>
+                            Welcome Back <span className="gradient-text">Cheif!</span>
                         </h2>
                     </div>
 
@@ -89,9 +86,7 @@ export default function LoginPage() {
                                 />
                             </div>
                             <div className="mt-5 cursor-pointer text-right text-sm text-slate-500 italic duration-200 hover:text-slate-300 hover:underline">
-                                <Link to="/auth/forgot-password">
-                                    Forgot Password?
-                                </Link>
+                                <Link to="/auth/forgot-password">Forgot Password?</Link>
                             </div>
 
                             <Button
@@ -125,10 +120,7 @@ export default function LoginPage() {
                                     },
                                 }}
                             >
-                                <SocialButton
-                                    href={''}
-                                    icon={<FcGoogle className="text-2xl" />}
-                                />
+                                <SocialButton href={''} icon={<FcGoogle className="text-2xl" />} />
                                 <SocialButton
                                     href={''}
                                     icon={<RiGithubLine className="text-2xl" />}

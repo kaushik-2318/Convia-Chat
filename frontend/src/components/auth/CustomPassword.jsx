@@ -34,11 +34,7 @@ export default function CustomPassword({ register, errors }) {
                 onClick={handleToggle}
                 className="pointer-events-none absolute top-1/2 left-0 -translate-y-1/2 rounded-full p-0 opacity-0 transition-all duration-500 peer-focus:pointer-events-auto peer-focus:left-[calc(100%-28px)] peer-focus:opacity-100 peer-[:not(:placeholder-shown)]:pointer-events-auto peer-[:not(:placeholder-shown)]:left-[calc(100%-28px)] peer-[:not(:placeholder-shown)]:opacity-100"
             >
-                {showPassword ? (
-                    <EyeOff className="h-5 w-5" />
-                ) : (
-                    <Eye className="h-5 w-5" />
-                )}
+                {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
             </button>
             {errors.password && (
                 <span className="absolute right-2 -bottom-5 text-xs text-red-500 italic">

@@ -1,0 +1,25 @@
+{
+  "name": "convia-chat",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kaushik-2318/Convia-Chat.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kaushik-2318/Convia-Chat/issues"
+  },
+  "homepage": "https://github.com/kaushik-2318/Convia-Chat#readme",
+  "description": "",
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "prettier": "^3.8.1",
+     "prettier-plugin-tailwindcss": "^0.7.2"
+  }
+}

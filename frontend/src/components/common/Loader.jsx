@@ -11,10 +11,7 @@ export default function Loader({ size = 'md', className = '' }) {
 
     return (
         <div
-            className={cn(
-                'absolute flex h-screen w-screen items-center justify-center',
-                className
-            )}
+            className={cn('absolute flex h-screen w-screen items-center justify-center', className)}
         >
             <div
                 className={cn(

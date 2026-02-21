@@ -2,20 +2,13 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 import { MotionDiv } from './MotionWrapper';
 
-export const GlassCard = ({
-    children,
-    className,
-    variant,
-    color,
-    ...props
-}) => {
+export const GlassCard = ({ children, className, variant, color, ...props }) => {
     const variants = {
         light: 'bg-white/10 border-border shadow-xl shadow-white/5',
         dark: 'bg-slate-900/60 border-border shadow-2xl shadow-black/40',
         solid: 'bg-slate-950 border-border',
         neo: 'bg-gradient-to-br from-slate-900/80 to-slate-900/40 border-t-white/10 border-l-white/10 border-b-black/30 border-r-black/30 shadow-2xl',
-        transparent:
-            'bg-transparent border border-border hover:backdrop-blur-xs',
+        transparent: 'bg-transparent border border-border hover:backdrop-blur-xs',
     };
 
     return (
