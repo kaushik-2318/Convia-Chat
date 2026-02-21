@@ -1,3 +1,4 @@
 #!/bin/sh
-npx prettier --write frontend backend
+npx prettier --write frontend
+npx prettier --write backend
 git add .
