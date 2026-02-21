@@ -9,6 +9,9 @@ const config = {
     semi: true,
     singleQuote: true,
     printWidth: 100,
+    jsxSingleQuote: false,
+    bracketSpacing: true,
+    bracketSameLine: false,
 };
 
 export default config;

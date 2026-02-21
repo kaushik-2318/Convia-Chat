@@ -7,4 +7,6 @@ export default {
     semi: true,
     singleQuote: true,
     printWidth: 100,
+    bracketSpacing: true,
+    bracketSameLine: false,
 };
