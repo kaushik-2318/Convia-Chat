@@ -3,6 +3,8 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import axios from 'axios';
 import connectDB from './src/config/db.js';
+import router from './src/routes/index.js';
+import { errorHandler } from './src/middlewares/errorHandler.js';
 // import { initializeSocket } from "./socket.js";
 
 dotenv.config();
@@ -11,9 +13,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const PORT = process.env.NODE_ENV === 'production' ? process.env.PORT : 3000;
-const BACKEND_URL =
-    process.env.NODE_ENV === 'production' ? process.env.BACKEND_URL : `http://localhost:${PORT}`;
+const isProduction = process.env.NODE_ENV === 'production';
+
+const PORT = isProduction ? process.env.PORT : 3000;
+const BACKEND_URL = isProduction ? process.env.BACKEND_URL : `http://localhost:${PORT}`;
 
 connectDB();
 
@@ -24,6 +27,20 @@ app.get('/health', (req, res) => {
 app.get('/', (req, res) => {
     res.send('MERN Backend running 🚀');
 });
+
+app.use('/api', router);
+
+app.use((req, res, next) => {
+    next(
+        new AppError({
+            message: 'Route not found',
+            statusCode: 404,
+            code: 'ROUTE_NOT_FOUND',
+        }),
+    );
+});
+
+app.use(errorHandler);
 
 setInterval(
     async () => {

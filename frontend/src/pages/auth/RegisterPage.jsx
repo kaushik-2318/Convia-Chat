@@ -5,7 +5,7 @@ import { FcGoogle } from 'react-icons/fc';
 import { ArrowLeft, ArrowRight, Loader2, Lock, Mail } from 'lucide-react';
 import { RiGithubLine } from 'react-icons/ri';
 import { FaLinkedinIn } from 'react-icons/fa6';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { User } from '@phosphor-icons/react';
 import { useForm } from 'react-hook-form';
@@ -16,20 +16,34 @@ import CustomPassword from '@/components/auth/CustomPassword';
 import AuthHeader from '@/components/auth/AuthHeader';
 import SocialButton from '@/components/auth/SocialButton';
 import { cn } from '@/lib/utils';
+import { useCheckEmailMutation, useRegisterMutation } from '@/services/api';
+import { useToast } from '@/components/common/Toast';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+import { setRegisterToken } from '@/redux/slice/authSlice';
+import ReCAPTCHA from 'react-google-recaptcha';
 
-const registerSchema = z
-  .object({
-    name: z
-      .string({ required_error: 'Name is required' })
-      .trim()
-      .min(3, 'Name must be at least 3 characters')
-      .max(16, 'Name cannot be more than 16 characters long')
-      .regex(/^[a-zA-Z]+( [a-zA-Z]+)*$/, 'Name can only contain alphabets'),
+const step1Schema = z.object({
+  firstName: z
+    .string({ required_error: 'First name is required' })
+    .trim()
+    .min(3, 'First name must be at least 3 characters')
+    .max(16, 'First name cannot be more than 16 characters long')
+    .regex(/^[a-zA-Z]+( [a-zA-Z]+)*$/, 'First name can only contain alphabets'),
 
-    email: z
-      .string({ required_error: 'Email is required' })
-      .email('Please enter a valid email address'),
+  lastName: z
+    .string({ required_error: 'Last name is required' })
+    .trim()
+    .min(3, 'Last name must be at least 3 characters')
+    .max(16, 'Last name cannot be more than 16 characters long')
+    .regex(/^[a-zA-Z]+( [a-zA-Z]+)*$/, 'Last name can only contain alphabets'),
 
+  email: z
+    .string({ required_error: 'Email is required' })
+    .email('Please enter a valid email address'),
+});
+
+const step2Schema = step1Schema
+  .extend({
     password: z
       .string({ required_error: 'Password is required' })
       .min(8, 'Password must be at least 8 characters long')
@@ -49,19 +63,27 @@ const registerSchema = z
   });
 
 export default function RegisterPage() {
+  const toast = useToast();
   const [step, setStep] = useState(1);
+  const [checkEmail, { isLoading: isCheckingEmail }] = useCheckEmailMutation();
+  const [registerUser, { isLoading: isRegistering }] = useRegisterMutation();
+  const dispatch = useAppDispatch();
+  const registerToken = useAppSelector((state) => state.auth.registerToken);
+  const recaptchaV2Ref = useRef(null);
 
   const {
     register,
     handleSubmit,
     trigger,
-    formState: { errors, isSubmitting },
+    getValues,
+    formState: { errors, isSubmitting, isValid },
   } = useForm({
-    resolver: zodResolver(registerSchema),
+    resolver: zodResolver(step === 1 ? step1Schema : step2Schema),
     mode: 'onTouched',
     reValidateMode: 'onChange',
     defaultValues: {
-      name: '',
+      firstName: '',
+      lastName: '',
       email: '',
       password: '',
       confirmPassword: '',
@@ -70,14 +92,50 @@ export default function RegisterPage() {
 
   const handleNextStep = async (e) => {
     e.preventDefault();
-    const isStepValid = await trigger(['name', 'email']);
-    if (isStepValid) {
-      setStep(2);
+    const isStepValid = await trigger(['firstName', 'lastName', 'email']);
+    if (!isStepValid) return;
+    const data = getValues();
+    try {
+      const resp = await checkEmail(data).unwrap();
+      if (resp?.status === 'success') {
+        dispatch(setRegisterToken(resp?.data?.token));
+        setStep(2);
+        return;
+      }
+    } catch (err) {
+      toast.error(err?.data?.error?.message);
+      console.log(err);
     }
   };
 
-  const handleFinalSubmit = (data) => {
-    console.log('✅ Final Validated Form Data:', data);
+  const handleFinalSubmit = async (data) => {
+    const isFormValid = await trigger(['password', 'confirmPassword']);
+    if (!isFormValid) return;
+    let recaptchaToken;
+    let payload;
+    let resp;
+
+    try {
+      recaptchaToken = await recaptchaV2Ref.current.executeAsync();
+      recaptchaV2Ref.current.reset();
+
+      payload = {
+        ...data,
+        token: registerToken,
+        recaptchaToken,
+      };
+
+      resp = await registerUser(payload).unwrap();
+
+      if (resp?.status === 'success') {
+        toast.success('Registration successful');
+        setStep(1);
+        return;
+      }
+    } catch (error) {
+      toast.error(error?.data?.error?.message || 'Registration failed');
+      console.log(error);
+    }
   };
 
   const renderStepContent = () => {
@@ -88,8 +146,15 @@ export default function RegisterPage() {
             <CustomInput
               register={register}
               errors={errors}
-              name="name"
-              label="Full Name"
+              name="firstName"
+              label="First Name"
+              icon={User}
+            />
+            <CustomInput
+              register={register}
+              errors={errors}
+              name="lastName"
+              label="Last Name"
               icon={User}
             />
             <CustomInput
@@ -122,6 +187,8 @@ export default function RegisterPage() {
         return null;
     }
   };
+
+  const isLoading = isSubmitting || isCheckingEmail || isRegistering;
 
   return (
     <MotionDiv className="flex h-full w-full flex-col items-center justify-center p-5">
@@ -157,6 +224,12 @@ export default function RegisterPage() {
             >
               {renderStepContent()}
 
+              <ReCAPTCHA
+                ref={recaptchaV2Ref}
+                sitekey={import.meta.env.VITE_RECAPTCHA_CLIENT}
+                size="invisible"
+              />
+
               <div className="mt-7 flex items-center gap-5">
                 <Button
                   type="button"
@@ -171,9 +244,10 @@ export default function RegisterPage() {
 
                 <Button
                   type="submit"
+                  isDisabled={isLoading || !isValid}
                   className="from-indigo via-pink to-purple flex h-14 w-full flex-1 items-center justify-center gap-2 rounded-xl bg-linear-to-r text-lg font-bold text-white shadow-lg transition-all hover:scale-[1.02] hover:shadow-indigo-500/50 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-70"
                 >
-                  {isSubmitting ? (
+                  {isLoading ? (
                     <Loader2 className="animate-spin" />
                   ) : (
                     <>
