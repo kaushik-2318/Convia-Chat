@@ -36,12 +36,7 @@
 }
 
 .gradient-text {
-  background: linear-gradient(
-    to right,
-    var(--color-indigo),
-    var(--color-purple),
-    var(--color-pink)
-  );
+  background: linear-gradient(to right, var(--color-indigo), var(--color-purple), var(--color-pink));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;

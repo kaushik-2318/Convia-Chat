@@ -5,14 +5,7 @@ import { GlassCard } from '@/components/common/GlassCard';
 import { MotionDiv } from '@/components/common/MotionWrapper';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@heroui/button';
 import { GithubLogoIcon, InstagramLogoIcon } from '@phosphor-icons/react';
 
@@ -124,10 +117,7 @@ export default function WelcomePage() {
                   }}
                 >
                   <Link to={social.link} target="_blank">
-                    <Button
-                      className="h-10 w-10 rounded-full p-0 duration-200 hover:scale-110"
-                      style={{ background: social.bg }}
-                    >
+                    <Button className="h-10 w-10 rounded-full p-0 duration-200 hover:scale-110" style={{ background: social.bg }}>
                       {social.icon}
                     </Button>
                   </Link>
@@ -253,11 +243,7 @@ export default function WelcomePage() {
             </GlassCard>
           </MotionDiv>
         </DialogTrigger>
-        <DialogContent
-          className={'text-white backdrop-blur-2xl'}
-          variant="neo"
-          clickCoords={clickCoords}
-        >
+        <DialogContent className={'text-white backdrop-blur-2xl'} variant="neo" clickCoords={clickCoords}>
           <DialogHeader className={'space-y-2.5'}>
             <DialogTitle className={'text-xl'}>What is Convia Chat?</DialogTitle>
             <DialogDescription className={'text-justify'}>
@@ -265,12 +251,9 @@ export default function WelcomePage() {
               <Link to={url} target="_blank" className="text-indigo">
                 Kaushik Verma
               </Link>
-              . Boasting not only a visually appealing UI but also packed with an array of enticing
-              features, Convia Chat is designed to provide with the best user experience. Powered by
-              the dynamic MERN stack and enriched with the sleek design elements of Tailwind CSS,
-              this application delivers a seamless chatting experience. From connecting with friends
-              to instant messaging system, Convia Chat ensures not just connectivity but a symphony
-              of interactivity and speed for its users.
+              . Boasting not only a visually appealing UI but also packed with an array of enticing features, Convia Chat is designed to provide with the best user experience. Powered by the dynamic
+              MERN stack and enriched with the sleek design elements of Tailwind CSS, this application delivers a seamless chatting experience. From connecting with friends to instant messaging
+              system, Convia Chat ensures not just connectivity but a symphony of interactivity and speed for its users.
             </DialogDescription>
           </DialogHeader>
         </DialogContent>

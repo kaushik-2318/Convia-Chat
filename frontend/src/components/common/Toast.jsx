@@ -29,9 +29,7 @@ export const ToastProvider = ({ children }) => {
   }, []);
 
   const startExitAnimation = useCallback((id) => {
-    setToasts((prev) =>
-      prev.map((toast) => (toast.id === id ? { ...toast, isExiting: true } : toast)),
-    );
+    setToasts((prev) => prev.map((toast) => (toast.id === id ? { ...toast, isExiting: true } : toast)));
   }, []);
 
   return (
@@ -111,12 +109,7 @@ const ToastContainer = () => {
     >
       <style>{animationStyles}</style>
       {toasts.map((toast) => (
-        <ToastNotification
-          key={toast.id}
-          toast={toast}
-          onDismiss={() => startExitAnimation(toast.id)}
-          onRemove={() => removeToast(toast.id)}
-        />
+        <ToastNotification key={toast.id} toast={toast} onDismiss={() => startExitAnimation(toast.id)} onRemove={() => removeToast(toast.id)} />
       ))}
     </div>
   );
@@ -203,12 +196,7 @@ const ToastNotification = forwardRef(({ toast, onDismiss, onRemove }, ref) => {
   };
 
   return (
-    <div
-      ref={ref}
-      className={`toast-notification ${isExiting ? 'toast-slide-out' : isVisible ? 'toast-slide-in' : ''}`}
-      style={getToastStyle()}
-      onClick={onDismiss}
-    >
+    <div ref={ref} className={`toast-notification ${isExiting ? 'toast-slide-out' : isVisible ? 'toast-slide-in' : ''}`} style={getToastStyle()} onClick={onDismiss}>
       {getIcon()}
       <div className="toast-message" style={{ flex: 1 }}>
         {message}

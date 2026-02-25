@@ -11,9 +11,7 @@ export default function Loader({ size = 'md', className = '' }) {
 
   return (
     <div className={cn('absolute flex h-screen w-screen items-center justify-center', className)}>
-      <div
-        className={cn('border-border border-t-indigo animate-spin rounded-full', sizeClasses[size])}
-      />
+      <div className={cn('border-border border-t-indigo animate-spin rounded-full', sizeClasses[size])} />
     </div>
   );
 }

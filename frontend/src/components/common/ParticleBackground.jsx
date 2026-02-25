@@ -28,11 +28,7 @@ export default function ParticleBackground() {
         this.vy = (Math.random() - 0.5) * 0.5;
         this.size = Math.random() * 2 + 1;
         // Pre-calculate color string to avoid string concatenation every frame
-        const colors = [
-          'rgba(99, 102, 241, 0.5)',
-          'rgba(168, 85, 247, 0.5)',
-          'rgba(236, 72, 153, 0.5)',
-        ];
+        const colors = ['rgba(99, 102, 241, 0.5)', 'rgba(168, 85, 247, 0.5)', 'rgba(236, 72, 153, 0.5)'];
         this.color = colors[Math.floor(Math.random() * colors.length)];
       }
 

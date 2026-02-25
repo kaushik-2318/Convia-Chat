@@ -37,9 +37,7 @@ const step1Schema = z.object({
     .max(16, 'Last name cannot be more than 16 characters long')
     .regex(/^[a-zA-Z]+( [a-zA-Z]+)*$/, 'Last name can only contain alphabets'),
 
-  email: z
-    .string({ required_error: 'Email is required' })
-    .email('Please enter a valid email address'),
+  email: z.string({ required_error: 'Email is required' }).email('Please enter a valid email address'),
 });
 
 const step2Schema = step1Schema
@@ -143,44 +141,16 @@ export default function RegisterPage() {
       case 1:
         return (
           <div key={'step1'} className="flex flex-col gap-7 border-slate-300 text-slate-300">
-            <CustomInput
-              register={register}
-              errors={errors}
-              name="firstName"
-              label="First Name"
-              icon={User}
-            />
-            <CustomInput
-              register={register}
-              errors={errors}
-              name="lastName"
-              label="Last Name"
-              icon={User}
-            />
-            <CustomInput
-              register={register}
-              errors={errors}
-              name="email"
-              label="Email"
-              icon={Mail}
-            />
+            <CustomInput register={register} errors={errors} name="firstName" label="First Name" icon={User} />
+            <CustomInput register={register} errors={errors} name="lastName" label="Last Name" icon={User} />
+            <CustomInput register={register} errors={errors} name="email" label="Email" icon={Mail} />
           </div>
         );
       case 2:
         return (
-          <div
-            key={'step2'}
-            className="flex flex-col gap-5 border-slate-300 text-slate-300 sm:gap-7"
-          >
+          <div key={'step2'} className="flex flex-col gap-5 border-slate-300 text-slate-300 sm:gap-7">
             <CustomPassword register={register} name="password" label="Password" errors={errors} />
-            <CustomInput
-              register={register}
-              errors={errors}
-              type="password"
-              name="confirmPassword"
-              label="Confirm Password"
-              icon={Lock}
-            />
+            <CustomInput register={register} errors={errors} type="password" name="confirmPassword" label="Confirm Password" icon={Lock} />
           </div>
         );
       default:
@@ -192,11 +162,7 @@ export default function RegisterPage() {
 
   return (
     <MotionDiv className="flex h-full w-full flex-col items-center justify-center p-5">
-      <GlassCard
-        color={'#6366f1'}
-        variant={'transparent'}
-        className="w-full max-w-md space-y-5 py-6"
-      >
+      <GlassCard color={'#6366f1'} variant={'transparent'} className="w-full max-w-md space-y-5 py-6">
         <MotionDiv
           initial={{ opacity: 0, y: 30 }}
           animate={{
@@ -210,25 +176,15 @@ export default function RegisterPage() {
 
           <div className="mt-4 mb-2 flex justify-center gap-2">
             {[1, 2].map((i) => (
-              <div
-                key={i}
-                className={`h-2 rounded-full transition-all duration-500 ${step === i ? 'w-8 bg-indigo-500' : 'w-2 bg-slate-600'}`}
-              />
+              <div key={i} className={`h-2 rounded-full transition-all duration-500 ${step === i ? 'w-8 bg-indigo-500' : 'w-2 bg-slate-600'}`} />
             ))}
           </div>
 
           <div className="w-full max-w-md px-5 sm:px-10">
-            <form
-              onSubmit={step === 2 ? handleSubmit(handleFinalSubmit) : handleNextStep}
-              className="space-y-5"
-            >
+            <form onSubmit={step === 2 ? handleSubmit(handleFinalSubmit) : handleNextStep} className="space-y-5">
               {renderStepContent()}
 
-              <ReCAPTCHA
-                ref={recaptchaV2Ref}
-                sitekey={import.meta.env.VITE_RECAPTCHA_CLIENT}
-                size="invisible"
-              />
+              <ReCAPTCHA ref={recaptchaV2Ref} sitekey={import.meta.env.VITE_RECAPTCHA_CLIENT} size="invisible" />
 
               <div className="mt-7 flex items-center gap-5">
                 <Button
@@ -277,11 +233,7 @@ export default function RegisterPage() {
               >
                 <SocialButton href={''} icon={<FcGoogle className="text-2xl" />} />
                 <SocialButton href={''} icon={<RiGithubLine className="text-2xl" />} />
-                <SocialButton
-                  href={''}
-                  icon={<FaLinkedinIn className="text-2xl" />}
-                  className={'text-blue-600'}
-                />
+                <SocialButton href={''} icon={<FaLinkedinIn className="text-2xl" />} className={'text-blue-600'} />
               </MotionDiv>
             </form>
 

@@ -20,11 +20,7 @@ export default function SocialButton({ href, icon, className }) {
       }}
     >
       <Link to={href} target="_blank">
-        <Button
-          className={cn('h-10 w-10 rounded-full p-0 duration-300 hover:scale-110', className)}
-        >
-          {icon}
-        </Button>
+        <Button className={cn('h-10 w-10 rounded-full p-0 duration-300 hover:scale-110', className)}>{icon}</Button>
       </Link>
     </MotionDiv>
   );

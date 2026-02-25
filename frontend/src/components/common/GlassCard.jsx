@@ -16,11 +16,7 @@ export const GlassCard = ({ children, className, variant, color, ...props }) => 
       whileHover={{ scale: 1.02 }}
       transition={{ type: 'spring', stiffness: 300 }}
       style={{ '--glow': color }}
-      className={cn(
-        'relative overflow-hidden rounded-xl transition-all duration-300 hover:[box-shadow:0_0_12px_var(--glow),0_0_28px_var(--glow)]',
-        variants[variant],
-        className,
-      )}
+      className={cn('relative overflow-hidden rounded-xl transition-all duration-300 hover:[box-shadow:0_0_12px_var(--glow),0_0_28px_var(--glow)]', variants[variant], className)}
       {...props}
     >
       <div className="relative z-10 h-full w-full">{children}</div>

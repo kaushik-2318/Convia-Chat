@@ -36,11 +36,7 @@ export default function CustomPassword({ register, errors }) {
       >
         {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
       </button>
-      {errors.password && (
-        <span className="absolute right-2 -bottom-5 text-xs text-red-500 italic">
-          {errors.password.message}
-        </span>
-      )}
+      {errors.password && <span className="absolute right-2 -bottom-5 text-xs text-red-500 italic">{errors.password.message}</span>}
     </div>
   );
 }

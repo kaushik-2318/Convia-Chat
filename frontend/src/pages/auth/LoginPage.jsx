@@ -48,11 +48,7 @@ export default function LoginPage() {
 
   return (
     <MotionDiv className="flex h-full w-full flex-col items-center justify-center p-5">
-      <GlassCard
-        color={'#6366f1'}
-        variant={'transparent'}
-        className="w-full max-w-md space-y-5 py-6"
-      >
+      <GlassCard color={'#6366f1'} variant={'transparent'} className="w-full max-w-md space-y-5 py-6">
         <MotionDiv
           initial={{ opacity: 0, y: 30 }}
           animate={{
@@ -71,19 +67,8 @@ export default function LoginPage() {
           <div className="w-full max-w-md px-5 sm:px-10">
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="flex flex-col gap-5 border-slate-300 text-slate-300 sm:gap-7">
-                <CustomInput
-                  register={register}
-                  errors={errors}
-                  name="email"
-                  label="Email"
-                  icon={Mail}
-                />
-                <CustomPassword
-                  register={register}
-                  errors={errors}
-                  name="password"
-                  label="Password"
-                />
+                <CustomInput register={register} errors={errors} name="email" label="Email" icon={Mail} />
+                <CustomPassword register={register} errors={errors} name="password" label="Password" />
               </div>
               <div className="mt-5 cursor-pointer text-right text-sm text-slate-500 italic duration-200 hover:text-slate-300 hover:underline">
                 <Link to="/auth/forgot-password">Forgot Password?</Link>
@@ -122,11 +107,7 @@ export default function LoginPage() {
               >
                 <SocialButton href={''} icon={<FcGoogle className="text-2xl" />} />
                 <SocialButton href={''} icon={<RiGithubLine className="text-2xl" />} />
-                <SocialButton
-                  href={''}
-                  icon={<FaLinkedinIn className="text-2xl" />}
-                  className={'text-blue-600'}
-                />
+                <SocialButton href={''} icon={<FaLinkedinIn className="text-2xl" />} className={'text-blue-600'} />
               </MotionDiv>
             </form>
 

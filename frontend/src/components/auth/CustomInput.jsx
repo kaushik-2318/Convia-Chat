@@ -18,11 +18,7 @@ export default function CustomInput({ register, type = 'text', errors, name, lab
       </label>
       <Icon className="pointer-events-none absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 transition-all duration-500 peer-focus:left-[calc(100%-28px)] peer-[:not(:placeholder-shown)]:left-[calc(100%-28px)]" />
 
-      {errors[name] && (
-        <span className="absolute right-2 -bottom-5 text-xs text-red-500 italic">
-          {errors[name].message}
-        </span>
-      )}
+      {errors[name] && <span className="absolute right-2 -bottom-5 text-xs text-red-500 italic">{errors[name].message}</span>}
     </div>
   );
 }
