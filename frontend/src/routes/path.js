@@ -5,9 +5,9 @@ function path(root, sublink) {
 const ROOTS_DASHBOARD = '/';
 
 export const PATH_DASHBOARD = {
-  root: '/',
+  root: ROOTS_DASHBOARD,
   general: {
-    app: path('/', 'app'),
+    app: path(ROOTS_DASHBOARD, 'app'),
   },
 };
 
@@ -19,8 +19,8 @@ export const PATH_AUTH = {
 };
 
 export const PATH_DOCS = {
-  root: '/',
+  root: ROOTS_DASHBOARD,
   general: {
-    tnc: path('/', 'docs/tnc'),
+    tnc: path(ROOTS_DASHBOARD, 'docs/tnc'),
   },
 };

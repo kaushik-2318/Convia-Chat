@@ -31,15 +31,7 @@ const userSchema = mongoose.Schema(
         passwordResetExpires: { type: Date },
         passwordResetLastSent: { type: Date },
 
-        // createdAt: { type: Date, default: Date.now() },
-        // updatedAt: { type: Date },
-
         verified: { type: Boolean, default: false },
-
-        otp: { type: String },
-        otp_expiry_time: { type: Date },
-        otp_last_sent_time: { type: Date },
-        otp_verify_attempts: { type: Number },
 
         friends: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
 
@@ -53,92 +45,44 @@ const userSchema = mongoose.Schema(
     },
 );
 
-userSchema.pre('save', async function (next) {
-    try {
-        if (!this.isModified('password') || !this.password) return next();
-        this.password = await bcrypt.hash(this.password, 14);
+userSchema.pre('save', async function () {
+    if (!this.isModified('password') || !this.password) return;
+    this.password = await bcrypt.hash(this.password, 14);
+});
 
-        next();
-    } catch (error) {
-        next(error);
+userSchema.pre('save', async function () {
+    if (!this.isModified('otp') || !this.otp) return;
+    this.otp = await bcrypt.hash(this.otp.toString(), 14);
+});
+
+userSchema.pre('save', async function () {
+    if (this.friends.length === 0) {
+        this.friends.push(this._id);
     }
 });
 
-userSchema.pre('save', async function (next) {
-    try {
-        if (!this.isModified('otp') || !this.otp) return next();
-        this.otp = await bcrypt.hash(this.otp.toString(), 14);
-
-        next();
-    } catch (error) {
-        next(error);
-    }
+userSchema.pre('save', async function () {
+    if (!this.isModified('password') || this.isNew || !this.password) return;
+    this.passwordChangedAt = Date.now() - 1000;
 });
 
-userSchema.pre('save', async function (next) {
-    try {
-        if (this.friends.length === 0) {
-            this.friends.push(this._id);
-        }
-
-        next();
-    } catch (error) {
-        next(error);
-    }
-});
-
-userSchema.pre('save', function (next) {
-    try {
-        if (!this.isModified('password') || this.isNew || !this.password) return next();
-
-        this.passwordChangedAt = Date.now() - 1000;
-        next();
-    } catch (error) {
-        next(error);
-    }
-});
-
-userSchema.methods.correctPassword = async function (canditatePassword, userPassword, next) {
-    try {
-        return await bcrypt.compare(canditatePassword, userPassword);
-    } catch (error) {
-        next(error);
-    }
+userSchema.methods.correctPassword = async function (canditatePassword, userPassword) {
+    return await bcrypt.compare(canditatePassword, userPassword);
 };
 
-userSchema.methods.correctOTP = async function (canditateOTP, userOTP, next) {
-    try {
-        return await bcrypt.compare(canditateOTP, userOTP);
-    } catch (error) {
-        next(error);
+userSchema.methods.changedPasswordAfter = function (JWTTimeStamp) {
+    if (this.passwordChangedAt) {
+        const changedTimeStamp = parseInt(this.passwordChangedAt.getTime() / 1000, 10);
+        return JWTTimeStamp < changedTimeStamp;
     }
+    return false;
 };
 
-userSchema.methods.changedPasswordAfter = function (JWTTimeStamp, next) {
-    try {
-        if (this.passwordChangedAt) {
-            const changedTimeStamp = parseInt(this.passwordChangedAt.getTime() / 1000, 10);
-            return JWTTimeStamp < changedTimeStamp;
-        }
-
-        return false;
-    } catch (error) {
-        next(error);
-    }
-};
-
-userSchema.methods.createPasswordResetToken = async function (next) {
-    try {
-        const resetToken = crypto.randomBytes(32).toString('hex');
-
-        this.passwordResetToken = crypto.createHash('sha256').update(resetToken).digest('hex');
-
-        this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
-
-        return resetToken;
-    } catch (error) {
-        next(error);
-    }
+userSchema.methods.createPasswordResetToken = async function () {
+    const resetToken = crypto.randomBytes(32).toString('hex');
+    this.passwordResetToken = crypto.createHash('sha256').update(resetToken).digest('hex');
+    this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
+    return resetToken;
 };
 
 const UserModel = mongoose.model('User', userSchema);

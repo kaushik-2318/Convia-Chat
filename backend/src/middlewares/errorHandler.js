@@ -8,8 +8,10 @@ export const errorHandler = (err, req, res, next) => {
     res.status(statusCode).json({
         success: false,
         error: {
+            data: err.data,
             code: err.code || 'INTERNAL_SERVER_ERROR',
-            message: statusCode === 500 ? 'Something went wrong' : err.message,
+            message:
+                statusCode === 500 && !err.isOperational ? 'Something went wrong' : err.message,
         },
     });
 };

@@ -5,8 +5,8 @@ import { FcGoogle } from 'react-icons/fc';
 import { ArrowRight, Loader2, Mail } from 'lucide-react';
 import { RiGithubLine } from 'react-icons/ri';
 import { FaLinkedinIn } from 'react-icons/fa6';
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useRef } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import AuthHeader from '@/components/auth/AuthHeader';
 import CustomInput from '@/components/auth/CustomInput';
 import CustomPassword from '@/components/auth/CustomPassword';
@@ -14,6 +14,11 @@ import SocialButton from '@/components/auth/SocialButton';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import z from 'zod';
+import { useLoginMutation, useSendOtpMutation } from '@/services/api';
+import ReCAPTCHA from 'react-google-recaptcha';
+import { useToast } from '@/components/common/Toast';
+import { useDispatch } from 'react-redux';
+import { loginSuccess } from '@/redux/slice/authSlice';
 
 export const loginSchema = z.object({
   email: z.string({ required_error: 'Email Required' }).email('Invalid Email'),
@@ -28,9 +33,17 @@ export const loginSchema = z.object({
 });
 
 export default function LoginPage() {
+  const [login, { isLoading }] = useLoginMutation();
+  const [sendOtp, { isLoading: isSendingOtp }] = useSendOtpMutation();
+  const recaptchaV2Ref = useRef(null);
+  const toast = useToast();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm({
     resolver: zodResolver(loginSchema),
@@ -42,8 +55,34 @@ export default function LoginPage() {
     },
   });
 
-  const onSubmit = (data) => {
-    console.log('✅ Final Validated Form Data:', data);
+  const onSubmit = async (data) => {
+    try {
+      //  #Captch
+      // const recaptchaToken = await recaptchaV2Ref.current.executeAsync();
+      const payload = {
+        ...data,
+        //  #Captch
+        recaptchaToken: '',
+      };
+
+      const resp = await login(payload).unwrap();
+      if (resp?.success) {
+        dispatch(loginSuccess({ user: resp.data.user, token: resp.data.user.token }));
+        toast.success('Login successful');
+        navigate('/dashboard');
+        reset();
+        return;
+      }
+    } catch (error) {
+      if (error?.data?.error?.code === 'EMAIL_NOT_VERIFIED') {
+        toast.error(error?.data?.error?.message);
+        toast.success('OTP sent successfully.');
+        navigate('/auth/verify-otp');
+        return;
+      }
+      toast.error(error?.data?.error?.message || 'Login failed');
+      reset();
+    }
   };
 
   return (
@@ -74,11 +113,15 @@ export default function LoginPage() {
                 <Link to="/auth/forgot-password">Forgot Password?</Link>
               </div>
 
+              {/* #Captch */}
+              {/* <ReCAPTCHA ref={recaptchaV2Ref} sitekey={import.meta.env.VITE_RECAPTCHA_CLIENT} size="invisible" /> */}
+
               <Button
                 type="submit"
+                disabled={isSubmitting || isLoading || isSendingOtp}
                 className="from-indigo via-pink to-purple my-5 flex h-14 w-full items-center justify-center gap-2 rounded-xl bg-linear-to-r text-lg font-bold text-white shadow-lg transition-all hover:scale-[1.02] hover:shadow-indigo-500/50 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-70"
               >
-                {isSubmitting ? (
+                {isSubmitting || isLoading || isSendingOtp ? (
                   <Loader2 className="animate-spin" />
                 ) : (
                   <>

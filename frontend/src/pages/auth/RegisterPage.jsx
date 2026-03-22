@@ -16,11 +16,12 @@ import CustomPassword from '@/components/auth/CustomPassword';
 import AuthHeader from '@/components/auth/AuthHeader';
 import SocialButton from '@/components/auth/SocialButton';
 import { cn } from '@/lib/utils';
-import { useCheckEmailMutation, useRegisterMutation } from '@/services/api';
 import { useToast } from '@/components/common/Toast';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { setRegisterToken } from '@/redux/slice/authSlice';
 import ReCAPTCHA from 'react-google-recaptcha';
+import { useNavigate } from 'react-router-dom';
+import { useCheckEmailMutation, useRegisterMutation } from '@/services/api';
 
 const step1Schema = z.object({
   firstName: z
@@ -62,18 +63,21 @@ const step2Schema = step1Schema
 
 export default function RegisterPage() {
   const toast = useToast();
+  const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [checkEmail, { isLoading: isCheckingEmail }] = useCheckEmailMutation();
   const [registerUser, { isLoading: isRegistering }] = useRegisterMutation();
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
   const registerToken = useAppSelector((state) => state.auth.registerToken);
-  const recaptchaV2Ref = useRef(null);
+  // #Captcha
+  // const recaptchaV2Ref = useRef(null);
 
   const {
     register,
     handleSubmit,
     trigger,
     getValues,
+    reset,
     formState: { errors, isSubmitting, isValid },
   } = useForm({
     resolver: zodResolver(step === 1 ? step1Schema : step2Schema),
@@ -95,8 +99,8 @@ export default function RegisterPage() {
     const data = getValues();
     try {
       const resp = await checkEmail(data).unwrap();
-      if (resp?.status === 'success') {
-        dispatch(setRegisterToken(resp?.data?.token));
+      if (resp?.success) {
+        // dispatch(setRegisterToken(resp?.data?.token));
         setStep(2);
         return;
       }
@@ -109,30 +113,29 @@ export default function RegisterPage() {
   const handleFinalSubmit = async (data) => {
     const isFormValid = await trigger(['password', 'confirmPassword']);
     if (!isFormValid) return;
-    let recaptchaToken;
-    let payload;
-    let resp;
 
     try {
-      recaptchaToken = await recaptchaV2Ref.current.executeAsync();
-      recaptchaV2Ref.current.reset();
+      // #Captcha
+      // const recaptchaToken = await recaptchaV2Ref.current.executeAsync();
+      // recaptchaV2Ref.current.reset();
 
-      payload = {
+      const payload = {
         ...data,
         token: registerToken,
-        recaptchaToken,
+        recaptchaToken: '',
       };
 
-      resp = await registerUser(payload).unwrap();
-
-      if (resp?.status === 'success') {
-        toast.success('Registration successful');
-        setStep(1);
+      const resp = await registerUser(payload).unwrap();
+      if (resp?.success) {
+        toast.success('Registration successful. Please verify OTP.');
+        navigate('/auth/verify-otp');
+        reset();
         return;
       }
     } catch (error) {
       toast.error(error?.data?.error?.message || 'Registration failed');
-      console.log(error);
+      setStep(1);
+      reset();
     }
   };
 
@@ -184,7 +187,8 @@ export default function RegisterPage() {
             <form onSubmit={step === 2 ? handleSubmit(handleFinalSubmit) : handleNextStep} className="space-y-5">
               {renderStepContent()}
 
-              <ReCAPTCHA ref={recaptchaV2Ref} sitekey={import.meta.env.VITE_RECAPTCHA_CLIENT} size="invisible" />
+              {/* // #Captcha */}
+              {/* <ReCAPTCHA ref={recaptchaV2Ref} sitekey={import.meta.env.VITE_RECAPTCHA_CLIENT} size="invisible" /> */}
 
               <div className="mt-7 flex items-center gap-5">
                 <Button

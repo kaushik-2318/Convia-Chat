@@ -1,17 +1,25 @@
+import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
-import dotenv from 'dotenv';
 import axios from 'axios';
 import connectDB from './src/config/db.js';
 import router from './src/routes/index.js';
 import { errorHandler } from './src/middlewares/errorHandler.js';
+import { AppError } from './src/utils/AppError.js';
 // import { initializeSocket } from "./socket.js";
 
-dotenv.config();
+import cookieParser from 'cookie-parser';
+
 const app = express();
 
-app.use(cors());
+app.use(
+    cors({
+        origin: 'http://localhost:5173',
+        credentials: true,
+    }),
+);
 app.use(express.json());
+app.use(cookieParser());
 
 const isProduction = process.env.NODE_ENV === 'production';
 

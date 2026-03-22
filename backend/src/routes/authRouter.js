@@ -1,6 +1,13 @@
 import express from 'express';
 import trimRequest from 'trim-request';
-import { login, register, checkEmail } from '../controllers/authController.js';
+import {
+    login,
+    register,
+    checkEmail,
+    refreshToken,
+    verifyOTP,
+    resendOTP,
+} from '../controllers/authController.js';
 // import { githubAuth, googleAuth, linkedinAuth} from "../controllers/socialController.js";
 
 const authRouter = express.Router();
@@ -14,23 +21,26 @@ authRouter.route('/register').post(trimRequest.all, register);
 // Login Route
 authRouter.route('/login').post(trimRequest.all, login);
 
-// // Logout Route
-// authRouter.route("/logout").post(trimRequest.all, logout);
+// Verify OTP Route
+authRouter.route('/verify-otp').post(trimRequest.all, verifyOTP);
 
-// // Send OTP Route
+// Resend OTP Route
+authRouter.route('/resend-otp').post(trimRequest.all, resendOTP);
+
+// Send OTP Route
 // authRouter.route("/send-otp").post(trimRequest.all, sendOtp);
 
-// // Verify OTP Route
-// authRouter.route("/verify-otp").post(trimRequest.all, verifyOTP);
+// Refresh Token Route
+authRouter.route('/refresh-token').post(trimRequest.all, refreshToken);
+
+// // Logout Route
+// authRouter.route("/logout").post(trimRequest.all, logout);
 
 // // Forgot Password Route
 // authRouter.route("/forgot-password").post(trimRequest.all, forgotPassword);
 
 // // Reset Password Route
 // authRouter.route("/reset-password").post(trimRequest.all, resetPassword);
-
-// // Refresh Token Route
-// authRouter.route("/refresh-token").post(trimRequest.all, refreshToken);
 
 // // ------------- Social Auth -------------
 

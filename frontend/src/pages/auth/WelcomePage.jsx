@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ArrowRight, Linkedin } from 'lucide-react';
-import { Logo } from '@/components/common/Logo';
+import Logo from '../../assets/logo.svg';
 import { GlassCard } from '@/components/common/GlassCard';
 import { MotionDiv } from '@/components/common/MotionWrapper';
 import { Link } from 'react-router-dom';
@@ -147,7 +147,7 @@ export default function WelcomePage() {
               <div className="border-border absolute top-1/2 left-1/2 h-[70%] w-[70%] -translate-x-1/2 -translate-y-1/2 rounded-full border" />
               <div className="border-border absolute top-1/2 left-1/2 h-[85%] w-[85%] -translate-x-1/2 -translate-y-1/2 rounded-full border" />
               <div className="flex h-full w-full items-center justify-center">
-                <Logo className="logo-box-shadow h-20 w-20 md:h-40 md:w-40" />
+                <img src={Logo} alt="Convia Chat Logo" className="logo-box-shadow h-20 w-20 md:h-40 md:w-40" />
               </div>
             </GlassCard>
           </div>
