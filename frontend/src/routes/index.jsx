@@ -5,6 +5,9 @@ import { SidebarProvider } from '@/components/ui/sidebar';
 import DashboardLayout from '@/layout/dashboard';
 import Loadable from '@/components/Loadable';
 import { DEFAULT_AUTH, DEFAULT_PATH } from '@/config';
+import GuestGuard from '@/guards/GuestGuard';
+import AuthGuard from '@/guards/AuthGuard';
+import VerifyGuard from '@/guards/VerifyGuard';
 
 export default function Router() {
   return useRoutes([
@@ -16,20 +19,64 @@ export default function Router() {
           element: <Navigate to={DEFAULT_AUTH} replace />,
           index: true,
         },
-        { path: 'welcome', element: <WelcomePage /> },
-        { path: 'login', element: <LoginPage /> },
-        { path: 'register', element: <RegisterPage /> },
-        { path: 'verify-otp', element: <VerifyPage /> },
-        { path: 'forgot-password', element: <ForgotPasswordPage /> },
-        { path: 'reset-password', element: <ResetPasswordPage /> },
+        {
+          path: 'welcome',
+          element: (
+            <GuestGuard>
+              <WelcomePage />
+            </GuestGuard>
+          ),
+        },
+        {
+          path: 'login',
+          element: (
+            <GuestGuard>
+              <LoginPage />
+            </GuestGuard>
+          ),
+        },
+        {
+          path: 'register',
+          element: (
+            <GuestGuard>
+              <RegisterPage />
+            </GuestGuard>
+          ),
+        },
+        {
+          path: 'verify-otp',
+          element: (
+            <VerifyGuard>
+              <VerifyPage />
+            </VerifyGuard>
+          ),
+        },
+        {
+          path: 'forgot-password',
+          element: (
+            <GuestGuard>
+              <ForgotPasswordPage />
+            </GuestGuard>
+          ),
+        },
+        {
+          path: 'reset-password/:token',
+          element: (
+            <GuestGuard>
+              <ResetPasswordPage />
+            </GuestGuard>
+          ),
+        },
       ],
     },
     {
       path: '/',
       element: (
-        <SidebarProvider>
-          <DashboardLayout />
-        </SidebarProvider>
+        <AuthGuard>
+          <SidebarProvider>
+            <DashboardLayout />
+          </SidebarProvider>
+        </AuthGuard>
       ),
       children: [
         {

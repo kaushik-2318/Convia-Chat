@@ -7,6 +7,8 @@ import {
     refreshToken,
     verifyOTP,
     resendOTP,
+    forgotPassword,
+    resetPassword,
 } from '../controllers/authController.js';
 // import { githubAuth, googleAuth, linkedinAuth} from "../controllers/socialController.js";
 
@@ -33,14 +35,14 @@ authRouter.route('/resend-otp').post(trimRequest.all, resendOTP);
 // Refresh Token Route
 authRouter.route('/refresh-token').post(trimRequest.all, refreshToken);
 
+// // Forgot Password Route
+authRouter.route('/forgot-password').post(trimRequest.all, forgotPassword);
+
 // // Logout Route
 // authRouter.route("/logout").post(trimRequest.all, logout);
 
-// // Forgot Password Route
-// authRouter.route("/forgot-password").post(trimRequest.all, forgotPassword);
-
-// // Reset Password Route
-// authRouter.route("/reset-password").post(trimRequest.all, resetPassword);
+// Reset Password Route
+authRouter.route('/reset-password').post(trimRequest.all, resetPassword);
 
 // // ------------- Social Auth -------------
 

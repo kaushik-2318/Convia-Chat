@@ -43,13 +43,16 @@ export const sendOtpService = async (user) => {
             from: `Convia Chat<${process.env.SMTP_EMAIL}>`,
             to: user.email,
             subject: "Convia Chat - Here's your OTP",
-            html: otpMailTemplate(user.firstName, otp),
+            html: otpMailTemplate({ name: user.firstName, otp, email: process.env.SMTP_EMAIL }),
         };
 
         await transporter.sendMail(emailDetails);
 
         return { success: true, message: 'OTP sent successfully', token };
     } catch (error) {
+        await redis.del(`verify:${token}`);
+        res.clearCookie('verifyToken', { httpOnly: true, secure: true, sameSite: 'None' });
+        await redis.del(`otp:rate:${user.email}`);
         throw new AppError({
             message: error.message || 'Failed to send OTP. Please try again after some time.',
             statusCode: error.statusCode || 500,
@@ -106,13 +109,16 @@ export const resendOTPService = async (token) => {
             from: `Convia Chat<${process.env.SMTP_EMAIL}>`,
             to: data.email,
             subject: "Convia Chat - Here's your OTP",
-            html: otpMailTemplate(data.name, otp),
+            html: otpMailTemplate({ name: data.name, otp, email: process.env.SMTP_EMAIL }),
         };
 
         await transporter.sendMail(emailDetails);
 
         return { success: true, message: 'OTP sent successfully.' };
     } catch (error) {
+        await redis.del(`verify:${token}`);
+        res.clearCookie('verifyToken', { httpOnly: true, secure: true, sameSite: 'None' });
+        await redis.del(`otp:rate:${data.email}`);
         throw new AppError({
             message: error.message || 'Failed to resend OTP. Please try again after some time.',
             statusCode: error.statusCode || 500,

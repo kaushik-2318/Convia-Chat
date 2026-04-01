@@ -27,9 +27,6 @@ const userSchema = mongoose.Schema(
 
         password: { type: String, required: [true, 'Password is required'] },
         passwordChangedAt: { type: Date },
-        passwordResetToken: { type: String },
-        passwordResetExpires: { type: Date },
-        passwordResetLastSent: { type: Date },
 
         verified: { type: Boolean, default: false },
 
@@ -45,14 +42,10 @@ const userSchema = mongoose.Schema(
     },
 );
 
+// Hash the password before saving
 userSchema.pre('save', async function () {
     if (!this.isModified('password') || !this.password) return;
     this.password = await bcrypt.hash(this.password, 14);
-});
-
-userSchema.pre('save', async function () {
-    if (!this.isModified('otp') || !this.otp) return;
-    this.otp = await bcrypt.hash(this.otp.toString(), 14);
 });
 
 userSchema.pre('save', async function () {
@@ -61,28 +54,9 @@ userSchema.pre('save', async function () {
     }
 });
 
-userSchema.pre('save', async function () {
-    if (!this.isModified('password') || this.isNew || !this.password) return;
-    this.passwordChangedAt = Date.now() - 1000;
-});
-
-userSchema.methods.correctPassword = async function (canditatePassword, userPassword) {
-    return await bcrypt.compare(canditatePassword, userPassword);
-};
-
-userSchema.methods.changedPasswordAfter = function (JWTTimeStamp) {
-    if (this.passwordChangedAt) {
-        const changedTimeStamp = parseInt(this.passwordChangedAt.getTime() / 1000, 10);
-        return JWTTimeStamp < changedTimeStamp;
-    }
-    return false;
-};
-
-userSchema.methods.createPasswordResetToken = async function () {
-    const resetToken = crypto.randomBytes(32).toString('hex');
-    this.passwordResetToken = crypto.createHash('sha256').update(resetToken).digest('hex');
-    this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
-    return resetToken;
+// Compare plain-text password with hashed password in DB
+userSchema.methods.correctPassword = async function (candidatePassword, userPassword) {
+    return await bcrypt.compare(candidatePassword, userPassword);
 };
 
 const UserModel = mongoose.model('User', userSchema);

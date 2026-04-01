@@ -14,7 +14,7 @@ import SocialButton from '@/components/auth/SocialButton';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import z from 'zod';
-import { useLoginMutation, useSendOtpMutation } from '@/services/api';
+import { useLoginMutation } from '@/services/api';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { useToast } from '@/components/common/Toast';
 import { useDispatch } from 'react-redux';
@@ -33,8 +33,7 @@ export const loginSchema = z.object({
 });
 
 export default function LoginPage() {
-  const [login, { isLoading }] = useLoginMutation();
-  const [sendOtp, { isLoading: isSendingOtp }] = useSendOtpMutation();
+  const [login, { isLoading: isLoginLoading }] = useLoginMutation();
   const recaptchaV2Ref = useRef(null);
   const toast = useToast();
   const navigate = useNavigate();
@@ -44,6 +43,7 @@ export default function LoginPage() {
     register,
     handleSubmit,
     reset,
+    watch,
     formState: { errors, isSubmitting },
   } = useForm({
     resolver: zodResolver(loginSchema),
@@ -85,6 +85,8 @@ export default function LoginPage() {
     }
   };
 
+  const isLoading = isSubmitting || isLoginLoading;
+
   return (
     <MotionDiv className="flex h-full w-full flex-col items-center justify-center p-5">
       <GlassCard color={'#6366f1'} variant={'transparent'} className="w-full max-w-md space-y-5 py-6">
@@ -106,11 +108,13 @@ export default function LoginPage() {
           <div className="w-full max-w-md px-5 sm:px-10">
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="flex flex-col gap-5 border-slate-300 text-slate-300 sm:gap-7">
-                <CustomInput register={register} errors={errors} name="email" label="Email" icon={Mail} />
-                <CustomPassword register={register} errors={errors} name="password" label="Password" />
+                <CustomInput disabled={isLoading} register={register} errors={errors} name="email" label="Email" icon={Mail} />
+                <CustomPassword disabled={isLoading} register={register} errors={errors} name="password" label="Password" />
               </div>
               <div className="mt-5 cursor-pointer text-right text-sm text-slate-500 italic duration-200 hover:text-slate-300 hover:underline">
-                <Link to="/auth/forgot-password">Forgot Password?</Link>
+                <Link to="/auth/forgot-password" state={{ email: watch('email') }}>
+                  Forgot Password?
+                </Link>
               </div>
 
               {/* #Captch */}
@@ -118,10 +122,10 @@ export default function LoginPage() {
 
               <Button
                 type="submit"
-                disabled={isSubmitting || isLoading || isSendingOtp}
+                disabled={isLoading}
                 className="from-indigo via-pink to-purple my-5 flex h-14 w-full items-center justify-center gap-2 rounded-xl bg-linear-to-r text-lg font-bold text-white shadow-lg transition-all hover:scale-[1.02] hover:shadow-indigo-500/50 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-70"
               >
-                {isSubmitting || isLoading || isSendingOtp ? (
+                {isLoading ? (
                   <Loader2 className="animate-spin" />
                 ) : (
                   <>

@@ -9,6 +9,11 @@ import { verifyreCAPTCHA } from '../services/authService.js';
 import { generateJWTToken, verifyJWTToken } from '../services/tokenService.js';
 import { redis } from '../config/upstash.js';
 import { resendOTPService, sendOtpService } from '../services/otpService.js';
+import resetPasswordTemplate from '../templates/resetPassword.js';
+import crypto from 'crypto';
+import { transporter } from '../services/mailer.js';
+
+const isProduction = process.env.NODE_ENV === 'production';
 
 const generateLoginTokens = async (userId, res) => {
     const accessToken = await generateJWTToken({ userId }, '1d', process.env.JWT_ACCESS_SECRET);
@@ -217,6 +222,9 @@ export const verifyOTP = catchAsync(async (req, res, next) => {
             },
         });
     } catch (error) {
+        await redis.del(`verify:${token}`);
+        res.clearCookie('verifyToken', { httpOnly: true, secure: true, sameSite: 'None' });
+        await redis.del(`otp:rate:${data.email}`);
         if (error instanceof AppError) {
             throw error;
         } else {
@@ -509,6 +517,142 @@ export const refreshToken = catchAsync(async (req, res) => {
                 message: error.message || 'Token refresh failed, Please try again.',
                 statusCode: 500,
                 code: 'TOKEN_REFRESH_FAILED',
+            });
+        }
+    }
+});
+
+export const forgotPassword = catchAsync(async (req, res, next) => {
+    const { email, recaptchaToken } = req.body;
+
+    if (!email) {
+        throw new AppError({
+            message: 'Email is required',
+            statusCode: 400,
+            code: 'VALIDATION_ERROR',
+        });
+    }
+
+    const filteredBody = filterObj({ email }, 'email');
+
+    const user = await UserModel.findOne({ email: filteredBody.email });
+
+    if (!user) {
+        return res.status(200).json({
+            success: true,
+            message: 'If an account with that email exists, a reset link has been sent.',
+        });
+    }
+
+    const resetToken = crypto.randomBytes(32).toString('hex');
+
+    await redis.set(
+        `reset:${resetToken}`,
+        JSON.stringify({
+            userId: user._id,
+            email: user.email,
+        }),
+        { ex: 15 * 60 },
+    );
+
+    const resetURL = isProduction
+        ? `${process.env.FRONTEND_URL}/auth/reset-password/${resetToken}`
+        : `http://localhost:5173/auth/reset-password/${resetToken}`;
+
+    try {
+        const emailDetails = {
+            from: `Convia Chat<${process.env.SMTP_EMAIL}>`,
+            to: user.email,
+            subject: 'Convia Chat - Password Reset Request',
+            html: resetPasswordTemplate({
+                name: user.firstName,
+                link: resetURL,
+                email: process.env.SMTP_EMAIL,
+            }),
+        };
+
+        await transporter.sendMail(emailDetails);
+
+        return res.status(200).json({
+            success: true,
+            message: 'Reset link sent to email.',
+        });
+    } catch (err) {
+        await redis.del(`reset:${resetToken}`);
+        throw new AppError({
+            message: err.message || 'There was an error sending the email. Try again later.',
+            statusCode: err.statusCode || 500,
+            code: err.code || 'FORGOT_PASSWORD_FAILED',
+        });
+    }
+});
+
+export const resetPassword = catchAsync(async (req, res, next) => {
+    try {
+        const { token, password, confirmPassword } = req.body;
+
+        if (!token || !password || !confirmPassword) {
+            throw new AppError({
+                message: 'All fields (token, password, confirmPassword) are required',
+                statusCode: 400,
+                code: 'VALIDATION_ERROR',
+            });
+        }
+
+        if (password !== confirmPassword) {
+            throw new AppError({
+                message: 'Passwords do not match',
+                statusCode: 400,
+                code: 'PASSWORD_MISMATCH',
+            });
+        }
+
+        if (!validator.isStrongPassword(password)) {
+            throw new AppError({
+                message:
+                    'Password must be 8 characters long, contain at least one number, lowercase, uppercase letters and a symbol',
+                statusCode: 400,
+                code: 'WEAK_PASSWORD',
+            });
+        }
+
+        const data = await redis.get(`reset:${token}`);
+
+        if (!data) {
+            throw new AppError({
+                message: 'Session expired, Please try resetting your password again.',
+                statusCode: 400,
+                code: 'SESSION_EXPIRED',
+            });
+        }
+
+        const user = await UserModel.findById(data.userId);
+
+        if (!user) {
+            throw new AppError({
+                message: 'User not found, Please try resetting your password again.',
+                statusCode: 404,
+                code: 'USER_NOT_FOUND',
+            });
+        }
+
+        user.password = password;
+        await user.save();
+
+        await redis.del(`reset:${token}`);
+
+        return res.status(200).json({
+            success: true,
+            message: 'Password changed successfully. You can now login.',
+        });
+    } catch (error) {
+        if (error instanceof AppError) {
+            throw error;
+        } else {
+            throw new AppError({
+                message: error.message || 'Reset password failed, Please try again.',
+                statusCode: 500,
+                code: 'RESET_PASSWORD_FAILED',
             });
         }
     }

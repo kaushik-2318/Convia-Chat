@@ -139,29 +139,29 @@ export default function RegisterPage() {
     }
   };
 
+  const isLoading = isSubmitting || isCheckingEmail || isRegistering;
+
   const renderStepContent = () => {
     switch (step) {
       case 1:
         return (
           <div key={'step1'} className="flex flex-col gap-7 border-slate-300 text-slate-300">
-            <CustomInput register={register} errors={errors} name="firstName" label="First Name" icon={User} />
-            <CustomInput register={register} errors={errors} name="lastName" label="Last Name" icon={User} />
-            <CustomInput register={register} errors={errors} name="email" label="Email" icon={Mail} />
+            <CustomInput disabled={isLoading} register={register} errors={errors} name="firstName" label="First Name" icon={User} />
+            <CustomInput disabled={isLoading} register={register} errors={errors} name="lastName" label="Last Name" icon={User} />
+            <CustomInput disabled={isLoading} register={register} errors={errors} name="email" label="Email" icon={Mail} />
           </div>
         );
       case 2:
         return (
           <div key={'step2'} className="flex flex-col gap-5 border-slate-300 text-slate-300 sm:gap-7">
-            <CustomPassword register={register} name="password" label="Password" errors={errors} />
-            <CustomInput register={register} errors={errors} type="password" name="confirmPassword" label="Confirm Password" icon={Lock} />
+            <CustomPassword disabled={isLoading} register={register} name="password" label="Password" errors={errors} />
+            <CustomInput disabled={isLoading} register={register} errors={errors} type="password" name="confirmPassword" label="Confirm Password" icon={Lock} />
           </div>
         );
       default:
         return null;
     }
   };
-
-  const isLoading = isSubmitting || isCheckingEmail || isRegistering;
 
   return (
     <MotionDiv className="flex h-full w-full flex-col items-center justify-center p-5">

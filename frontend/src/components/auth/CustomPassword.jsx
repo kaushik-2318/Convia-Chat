@@ -1,7 +1,7 @@
 import { Eye, EyeOff, Lock } from 'lucide-react';
 import React, { useState } from 'react';
 
-export default function CustomPassword({ register, errors }) {
+export default function CustomPassword({ register, errors, disabled = false }) {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleToggle = () => {
@@ -16,6 +16,7 @@ export default function CustomPassword({ register, errors }) {
         type={showPassword ? 'text' : 'password'}
         id="password"
         placeholder=" "
+        disabled={disabled}
         className="peer w-full border-b bg-transparent py-2 pl-10 placeholder-transparent transition-all duration-300 outline-none focus:pr-10 focus:pl-2 [:not(:placeholder-shown)]:pr-10 [:not(:placeholder-shown)]:pl-2"
       />
 

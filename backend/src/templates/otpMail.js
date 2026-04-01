@@ -1,133 +1,105 @@
-const otpMailTemplate = (name, otp) => {
-    return ` 
-  <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>OTP Template</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        background-color: #f2f2f2;
-        margin: 0;
-        padding: 0;
-      }
-
-      .header {
-        position: relative;
-        background-image: url("");
-        background-size: contain;
-        padding: 20px;
-        text-align: center;
-        color: #333;
-        -webkit-text-stroke-width: 0.5px;
-        -webkit-text-stroke-color: #ccc;
-        font-size: 36px;
-        font-weight: bold;
-        letter-spacing: 5px;
-        text-shadow: 0.5px 0.5px 5px #fff;
-        margin-top: -20px;
-        margin-left: -20px;
-        margin-right: -20px;
-        position: relative;
-        z-index: 1;
-      }
-
-      .container {
-        max-width: 800px;
-        margin: 50px auto;
-        padding: 20px;
-        background-color: #fff;
-        border-radius: 10px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      }
-
-      .logo {
-        text-align: center;
-        margin-bottom: 20px;
-        margin: 5px;
-      }
-
-      .logo img {
-        max-width: 100px;
-      }
-
-      .otp-content {
-        text-align: center;
-      }
-
-      .otp-text {
-        font-size: 24px;
-        color: #333;
-        margin-bottom: 10px;
-      }
-
-      .otp-number {
-        font-size: 24px;
-        color: #fff;
-        background-color: rgba(0, 123, 255, 0.7);
-        border-radius: 50%;
-        width: 42px;
-        height: 42px;
-        line-height: 42px;
-        margin: 2px;
-        display: inline-block;
-      }
-
-      .note {
-        text-align: center;
-        font-size: 14px;
-        color: #777;
-        margin-top: 20px;
-      }
-
-      .footer {
-        text-align: center;
-        width: 100%;
-        margin-top: 30px;
-      }
-
-      .footer a {
-        color: #007bff;
-        text-decoration: none;
-      }
-    </style>
-  </head>
-  <body>
-        <div class="container">
-          <div class="header">Welcome to Convia Chat</div>
-          <div class="logo">
-            <a href="https://conviachat.vercel.app/">
-              <img src="" alt="Convia Chat Logo" />
-            </a>
-          </div>
-          <div class="otp-content">
-            <div class="note">
-              <p>Hey ${name},</p>
-            </div>
-            <div class="otp-text">Your One-Time Password (OTP):</div>
+const otpMailTemplate = (data) =>
+    `
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prove You Are You</title>
+  <style type="text/css">
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #ffffff;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    .gradient-text-support {
+      background: linear-gradient(to right, #6366f1, #a855f7, #ec4899);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent !important;
+    }
+    .otp-number:hover {
+      border-color: #ec4899 !important;
+    }
+    a {
+      color: #6366f1;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body style="margin: 0; padding: 0; background-color: #ffffff; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; -webkit-font-smoothing: antialiased;">
   
-            ${otp
-                .split('')
-                .map((digit) => `<div class="otp-number">${digit}</div>`)
-                .join('')}
-          </div>
-          <div class="note">
-            <p>Use this OTP to complete your verification process.</p>
-          </div>
-        </div>
-        <div class="footer">
-          <p>If you didn't request this OTP, please ignore this email.</p>
-          <p>
-            For any assistance, please contact
-            <a href="mailto:conviachat@gmail.com">conviachat@gmail.com</a>.
-          </p>
-        </div>
-      </body>
-    </html>
-  
-    `;
-};
+  <table width="100%" border="0" cellpadding="0" cellspacing="0" style="background-color: #ffffff; padding: 40px 10px;">
+    <tr>
+      <td align="center">
+        
+        <table width="100%" max-width="500" border="0" cellpadding="0" cellspacing="0" style="max-width: 500px; background-color: #0f172a; border-radius: 24px; border: 1px solid #1e293b; overflow: hidden; margin: 0 auto;">
+          
+          <tr>
+            <td align="center" style="background-color: #ec4899; color: #ffffff; font-size: 10px; font-weight: 900; letter-spacing: 2px; padding: 6px 0;">
+              IDENTITY DOUBT: HIGH
+            </td>
+          </tr>
+
+          <tr>
+            <td align="center" style="padding: 40px;">
+              
+              <div style="font-size: 14px; text-transform: uppercase; letter-spacing: 3px; color: #475569; margin-bottom: 20px;">
+                Convia Chat Protocol
+              </div>
+              
+              <div style="margin-bottom: 30px;">
+                <a href="https://conviachat.vercel.app/" target="_blank">
+                  <img src="https://conviachat.vercel.app/favicon.ico" alt="Logo" width="90" style="display: block; border: 0; margin: 0 auto;" onerror="this.src='https://via.placeholder.com/80/6366f1/ffffff?text=C'">
+                </a>
+              </div>
+
+              <h1 class="gradient-text-support" style="color: #a855f7; font-size: 28px; font-weight: 800; text-align: center; margin: 0 0 10px 0;">
+                Are you actually ${data.name}?
+              </h1>
+              
+              <p style="text-align: center; font-size: 15px; color: #94a3b8; line-height: 1.6; margin: 0 0 35px 0;">
+                The internet is a scary place, and we're not entirely convinced you're who you say you are. Please enter these numbers so we can continue pretending our security is impenetrable.
+              </p>
+
+              <div style="text-align: center; margin-bottom: 30px;">
+                ${data.otp
+                    .split('')
+                    .map(
+                        (digit) =>
+                            `<span class="otp-number" style="display: inline-block; font-size: 28px; font-weight: 800; color: #ffffff; background-color: #1e1b4b; border: 1px solid #1e293b; border-radius: 12px; width: 50px; height: 60px; line-height: 60px; text-align: center; margin: 0 5px;">${digit}</span>`,
+                    )
+                    .join('')}
+              </div>
+
+              <div style="background-color: #020617; padding: 15px; border-radius: 12px; font-size: 13px; color: #475569; font-style: italic; border-left: 3px solid #a855f7; text-align: left;">
+                Hurry up. These numbers will expire in 5 minutes, much like our patience for manual verifications.
+              </div>
+
+              <table width="100%" border="0" cellpadding="0" cellspacing="0" style="margin: 30px 0;">
+                <tr>
+                  <td style="border-top: 1px solid #475569; opacity: 0.4;"></td>
+                </tr>
+              </table>
+
+              <div style="text-align: center; font-size: 12px; color: #64748b; line-height: 1.6;">
+                <p style="margin: 0 0 10px 0;">If you didn't request this, congratulations! Someone else is trying to be you. You should probably be worried, but you can also just ignore this.</p>
+                <p style="margin: 0;">
+                  Help: <a href="mailto:${data.email}" style="color: #6366f1; text-decoration: none; font-weight: 600;">${data.email}</a>
+                </p>
+              </div>
+
+            </td>
+          </tr>
+        </table>
+
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+`;
 
 export default otpMailTemplate;
